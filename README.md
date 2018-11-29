@@ -10,6 +10,6 @@ In a second terminal
 2. npm start
 
 Using chrome (or fav browser), navigate to
-1. localhost:8080
+1. localhost:1234 ( or whatever port Parcel decides to run on, which is normally 1234)
 
 Wait for the data to process and the answers should appear
