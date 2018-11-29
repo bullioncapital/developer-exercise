@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    margin: 0px;
+}
+.page-container {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	width: 100%;
+	align-items: center;
+	// justify-content: space-around;
+}
+
+.answer-div{
+	padding: 100px 50px 100px 50px;
+}

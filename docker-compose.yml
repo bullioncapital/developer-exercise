@@ -1,0 +1,9 @@
+version: '2.2'
+services:
+  node_server:
+    image: kaltemrix/dev-exercise
+    # image: node:latest
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./:/node_server
