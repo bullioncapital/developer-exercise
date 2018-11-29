@@ -6,8 +6,8 @@ Using a linux Sub-System (preferable for docker), CD into the main directory and
 1. docker-compose up
 
 In a second terminal
-2. cd client
-3. npm start
+1. cd client
+2. npm start
 
 Using chrome (or fav browser), navigate to
 1. localhost:8080
