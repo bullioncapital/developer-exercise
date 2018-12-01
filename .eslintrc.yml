@@ -1,0 +1,40 @@
+#
+# ESLint Configuration, https://eslint.org/docs/user-guide/configuring
+#
+
+plugins:
+  - "jest"
+
+extends:
+  - "airbnb-base"
+  - "eslint:recommended"
+
+env:
+  browser: true
+  es6: true
+  node: true
+  jest: true
+
+globals:
+  __DEV_TOOLS__: true
+
+parserOptions:
+  ecmaVersion: 6
+  impliedStrict: true # All code will be treated as being in strict mode.
+  sourceType: "module" # Indicates that we are using ES6 modules.
+
+rules:
+  new-cap: "off"
+  valid-jsdoc: "error"
+  import/no-extraneous-dependencies: "off"
+  import/no-named-as-default: "off"
+  no-var: "off"
+  vars-on-top: "off"
+  comma-dangle: "off"
+  id-length: "off"
+
+  indent:
+    - "error"
+    - 2
+    - SwitchCase: 1
+

@@ -1,0 +1,37 @@
+{
+  "name": "developer-exercise",
+  "version": "1.0.0",
+  "description": "ABX code test",
+  "main": "./src/index.ts",
+  "repository": "git@github.com:aj120426394/developer-exercise.git",
+  "author": "Jeff Teng <another0219@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "webpack --env.NODE_ENV=local --progress --hide--modules --config=webpack.config.js",
+    "hot": "webpack-dev-server --env.NODE_ENV=local --progress --hide--modules --config=webpack.config.js",
+    "build": "webpack --progress --env.NODE_ENV=production --env.production  --hide--modules --config=webpack.config.js",
+    "start": "nodemon ./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.11",
+    "clean-webpack-plugin": "^1.0.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.1.0",
+    "nodemon": "^1.18.7",
+    "prettier": "^1.15.3",
+    "ts-loader": "^5.3.1",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.2.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "csv-parse": "^4.0.1",
+    "csvtojson": "^2.0.8"
+  }
+}

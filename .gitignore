@@ -1,0 +1,54 @@
+#
+# Git Ignore Config, https://git-scm.com/docs/gitignore.
+#
+
+# Application dependencies.
+/node_modules/
+/vendor/
+/flow-typed/
+
+
+# Runtime data and ide metadata.
+/public/storage/
+/_ide_helper.php
+/.phpstorm.meta.php
+/resources/assets/js/laravel/routes.js
+
+# Compiled output.
+/public/css/
+/public/js/
+/public/images/
+/public/fonts/
+/public/mix-manifest.json
+/public/hot
+
+# Application configuration.
+/.env*
+/config/admin-env
+/config/env
+
+# Keep example configuration.
+!.env.example
+!.env.ci.example
+
+# IDE files.
+/*.iml
+/.idea/
+
+# Test runtime files.
+/test-performance/reports/*
+/test-performance/*.properties
+/.nyc_output/
+/coverage/
+
+# Allow scaffolding of directories.
+!.keep
+
+# Maintenance files.
+/storage/in-maintenance
+
+# Logs created by running scripts, such as node.
+/*.log
+
+# Docker-compose file
+docker-compose.yml
