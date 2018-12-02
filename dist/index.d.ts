@@ -1,1 +1,1 @@
-export {};
+import './data.csv';

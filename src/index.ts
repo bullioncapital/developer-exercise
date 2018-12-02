@@ -1,73 +1,51 @@
-import parse from 'csv-parse';
-import fs from 'fs';
+import express from 'express';
+import './data.csv';
 import path from 'path';
-import csvtojson from 'csvtojson';
-import readline from 'readline';
+import bodyParser from 'body-parser';
+import Controller from './Controller/Controller';
+import JSONResponse from './Helper/JSONResponse';
 
-let i = 0;
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+const ctrl = new Controller(path.join(__dirname, 'data.csv'));
 
-const parseCSVWithSkippedLine = (filepath: string, skip: number): Promise<Array<Array<string>>> => new Promise((resolve, reject) => {
-  let i = 0;
-  const result = Array<Array<string>>;
-  const fileWriter = fs.createWriteStream(path.resolve(__dirname, 'data-modify.csv'));
-  let lineReader = readline.createInterface({
-    input: fs.createReadStream(filepath, { start: 0 })
-  });
-  lineReader.on('line', (line) => {
-    if (i < skip) {
-      // console.log(line);
-    } else {
-      fileWriter.write(line);
-      const convertedLine = line.split(',').filter((item) => item && item !== '').map((item:string) => item.replace(/"/g, ''));
-      result.push(convertedLine);
+ctrl.init().then(() => {
+  app.get('/get-year-with-highest-value-of-indicator/:indicator', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    if (!req.params.indicator) {
+      res.status(400).json(new JSONResponse().respondBadRequest('Need to provide indicator code'));
     }
-    i++;
+    const result = ctrl.getYearWithHighestValueOfIndicators(req.params.indicator);
+    if (result) {
+      res.status(200).json(new JSONResponse().respondOk('', result));
+    } else {
+      res.status(400).json(new JSONResponse().respondBadRequest('Data not found'));
+    }
   });
-  lineReader.on('close', () => {
-    console.log('wirte finish');
-    resolve(result);
-  });
-});
-/**
- * Convert given array to JSON, the item in the first row will be the key for each object
- * @param {Array<Array<string>>} data - Data generate from parseCSVWithSkippedLine
- * @return {Array<{[k: string]: string}>} - Array of object which use the item in first row of given array as the key;
- */
-const convertToJson = (data:Array<Array<string>>): Array<{[k: string]: string}> => {
-  const result = [];
-  const header = data[0];
-  for(let i = 1; i < data.length; i++) {
-    const newItem: {[k: string]: string} = {};
-    data[i].forEach((item, index) => {
-      newItem[header[index]] = item;
-    });
-    result.push(newItem);
-  }
-  return result;
-};
 
-parseCSVWithSkippedLine(path.resolve(__dirname, 'data.csv'), 4).then(convertToJson).then((data) => {
-  console.log(data[0]);
+  app.get('/get-country-with-highest-avg-value-of-indicator-in-period/:indicator', (req, res) => {
+    const startYear = req.query.start;
+    const endYear = req.query.end;
+    if (!req.params.indicator) {
+      res.status(400).json(new JSONResponse().respondBadRequest('Need to provide indicator code'));
+    }
+    if (startYear && endYear) {
+      res.setHeader('Content-Type', 'application/json');
+      const result = ctrl.getCountryWithHighestAvgIndicatorInRangeOfYear(req.params.indicator, startYear, endYear);
+      if (result) {
+        res.status(200).json(new JSONResponse().respondOk('', result));
+      } else {
+        res.status(400).json(new JSONResponse().respondBadRequest('Data not found'));
+      }
+    } else {
+      res.status(400).json(new JSONResponse().respondBadRequest('Need to provide start year and end year'));
+    }
+  });
+
+  // EN.ATM.CO2E.KT
+  app.listen(9999, () => {
+    console.log('Example app listening on port 9999 ');
+  });
 });
-//
-// const csvData = [];
-//
-// fs.createReadStream(path.resolve(__dirname, 'data.csv'), {start: 89})
-//   .pipe(parse({quote: '"', ltrim: true, rtrim: true, delimiter: ','}))
-//   .on('error', (err) => {
-//     console.log(err);
-//   })
-// .on('data', function(csvrow) {
-//     if (i < 5) {
-//     console.log(csvrow);
-//   }
-//     i++;
-//   // console.log(csvrow);
-//   //do something with csvrow
-//   csvData.push(csvrow);
-// })
-// .on('end',function() {
-//   //do something wiht csvData
-//   console.log(csvData[0]);
-// });

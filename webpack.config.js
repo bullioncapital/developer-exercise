@@ -1,5 +1,16 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+var fs = require('fs');
+
+
+var nodeModules = {};
+fs.readdirSync('node_modules')
+  .filter(function(x) {
+    return ['.bin'].indexOf(x) === -1;
+  })
+  .forEach(function(mod) {
+    nodeModules[mod] = 'commonjs ' + mod;
+  });
 
 module.exports = (env) => {
   // console.log(env.NODE_ENV);
@@ -10,8 +21,8 @@ module.exports = (env) => {
     output: {
       path: path.join(__dirname, 'dist'),
       publicPath: '/',
-      filename: '[name].[hash].js',
-      chunkFilename: '[name].js'
+      filename: 'index.js'
+      // filename: '[name].[hash].js'
     },
     module: {
       rules: [
@@ -19,6 +30,13 @@ module.exports = (env) => {
           test: /\.(js|ts)x?$/,
           exclude: /(node_modules|bower_components)/,
           use: 'ts-loader'
+        },
+        {
+          test: /\.csv$/,
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
         }
       ]
     },
@@ -31,6 +49,10 @@ module.exports = (env) => {
     plugins: [
       new CleanWebpackPlugin(['dist']),
     ],
-    target: 'node'
+    target: 'node',
+    externals: nodeModules,
+    node: {
+      __dirname: false
+    }
   };
 };

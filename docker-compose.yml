@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  node-sever:
+    container_name: node
+    build: .
+    volumes:
+      - .:/srv/app/node-server
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "8081:9999"
+    working_dir: /srv/app/node-server
+    command: "yarn start"

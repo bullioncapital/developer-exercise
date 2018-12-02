@@ -4,12 +4,6 @@
     "test": {
       "presets": ["@babel/preset-env", "@babel/preset-typescript"],
       "plugins": [
-        [
-          "babel-plugin-styled-components",
-          {
-            "displayName": true
-          }
-        ],
         "@babel/plugin-transform-modules-commonjs",
         "@babel/plugin-proposal-class-properties"
       ]
