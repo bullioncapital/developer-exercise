@@ -44,8 +44,6 @@ export default class Controller {
               country.addIndicator(item['Indicator Code'], indicator);
             });
             this.countries = countries;
-            // return countries;
-
             resolve();
             // this.getCountryWithHighestAvgIndicatorInRangeOfYear(countries, 'SP.POP.GROW', 1980, 1990);
             // this.getYearWithHighestValueOfIndicators('EN.ATM.CO2E.KT');

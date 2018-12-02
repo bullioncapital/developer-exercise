@@ -6,7 +6,7 @@ I make this into an Node base API server. To get the server running:
 2. Open your browser.
 3. Browse [http://localhost:8081](http://localhost:8081)
 
-### API
+## API
 This api server contains 2 api:
 - `/get-country-with-highest-avg-value-of-indicator-in-period/${indicator}?start=${startYear}&end=${endYear}`
 
@@ -35,8 +35,8 @@ For the question 2B:
 1. Typescript:\
 As I mentioned in the interview, I used Flow lot and move to Typescript just more than a month. 
 In the most case, they are pretty much the same. But Typescript has more configuration than Flow. So 
-at the linting part, I didn't rely too much on tslint because eslint integrate quite well with Typescript
-on my IDE (Intellij).
+at the linting part, I didn't rely too much on tslint because Eslint integrate quite well with Typescript
+on my IDE (Intellij), and I use Prettier commonly. Linting shouldn't be a problem.
 
 2. Provide data:\
 The data you provide shows all different indicators around different country. But it also include some group stats
@@ -46,4 +46,6 @@ which is not country-based such as World or IDA & IBRD total. As I don't under s
 3. Testing:\
 I try to cover all of my code with test. But some of the code like Helper or Server config that I couldn't find
 the right way to test them, so I didn't write test code for them.
+
+
 
