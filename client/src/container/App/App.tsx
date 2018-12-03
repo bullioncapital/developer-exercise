@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
-import Question2A from './component/Question2A/Question2A';
-import Question2B from './component/Question2B/Question2B';
-import axios from 'axios';
+import Question2A from '../../component/Question2A/Question2A';
+import Question2B from '../../component/Question2B/Question2B';
 
 type State = {
   question: string;
