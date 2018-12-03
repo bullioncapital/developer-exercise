@@ -6,8 +6,9 @@ import { StyledRow } from '../StyledReactstrap/StyledReactstrip';
 type Props = {};
 type State = {
   indicator: string;
-  answerYear: number|undefined;
-  answerValue: number|undefined;
+  answerYear: number | undefined;
+  answerValue: number | undefined;
+  error: string | undefined;
 };
 
 class Question2B extends React.Component<Props, State> {
@@ -15,7 +16,8 @@ class Question2B extends React.Component<Props, State> {
   state = {
     indicator: 'EN.ATM.CO2E.KT',
     answerYear: undefined,
-    answerValue: undefined
+    answerValue: undefined,
+    error: undefined
   };
 
   /**
@@ -37,7 +39,8 @@ class Question2B extends React.Component<Props, State> {
     this.setState({
       indicator: 'EN.ATM.CO2E.KT',
       answerYear: undefined,
-      answerValue: undefined
+      answerValue: undefined,
+      error: undefined
     });
   };
 
@@ -46,6 +49,7 @@ class Question2B extends React.Component<Props, State> {
    */
   private onGetClick = (): void => {
     const url = `${this.url}/${this.state.indicator}`;
+
     axios
       .get(url)
       .then((res) => {
@@ -55,9 +59,18 @@ class Question2B extends React.Component<Props, State> {
         console.log(data);
         this.setState({
           answerYear: data.data.year,
-          answerValue: data.data.averageValue
+          answerValue: data.data.averageValue,
+          error: undefined
         });
+      })
+      .catch((reason:Error) => {
+        this.setState({
+          answerYear: undefined,
+          answerValue: undefined,
+          error: reason.message
+        })
       });
+
   };
   render() {
     return (
@@ -109,6 +122,13 @@ class Question2B extends React.Component<Props, State> {
               </Col>
             </StyledRow>
           </Container>
+        )}
+        {this.state.error && (
+          <StyledRow>
+            <Col xs="8">
+              <h1>{this.state.error}</h1>
+            </Col>
+          </StyledRow>
         )}
       </Container>
     );

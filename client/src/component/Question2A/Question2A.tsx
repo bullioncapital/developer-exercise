@@ -9,6 +9,7 @@ type State = {
   startYear: number;
   endYear: number;
   answer: string | undefined;
+  error: string|undefined;
 };
 
 class Question2A extends React.Component<Props, State> {
@@ -17,7 +18,8 @@ class Question2A extends React.Component<Props, State> {
     indicator: 'SP.POP.GROW',
     startYear: 1980,
     endYear: 1990,
-    answer: undefined
+    answer: undefined,
+    error: undefined
   };
   /**
    * @type string - api url
@@ -53,7 +55,8 @@ class Question2A extends React.Component<Props, State> {
       indicator: 'SP.POP.GROW',
       startYear: 1980,
       endYear: 1990,
-      answer: undefined
+      answer: undefined,
+      error: undefined
     });
   };
 
@@ -70,9 +73,16 @@ class Question2A extends React.Component<Props, State> {
       .then((data) => {
         console.log(data);
         this.setState({
-          answer: data.data.name
+          answer: data.data.name,
+          error: undefined
         });
-      });
+      })
+      .catch((reason:Error) => {
+        this.setState({
+          answer: undefined,
+          error: reason.message
+        })
+      })
   };
 
   render() {
@@ -133,6 +143,13 @@ class Question2A extends React.Component<Props, State> {
             </Col>
             <Col xs="8">
               <h1>{this.state.answer}</h1>
+            </Col>
+          </StyledRow>
+        )}
+        {this.state.error && (
+          <StyledRow>
+            <Col xs="8">
+              <h1>{this.state.error}</h1>
             </Col>
           </StyledRow>
         )}
