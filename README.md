@@ -47,8 +47,15 @@ In the most case, they are pretty much the same. But Typescript has more configu
 At the linting part, I didn't rely too much on tslint because Eslint integrate quite well with Typescript
 on my IDE (Intellij), and I use Prettier commonly. So linting shouldn't be a problem.
 
-2. __Provide data:__\
-The data you provide shows all different indicators around different country. But it also include some group stats
+2. __Data Management__\
+When I just started, I have thought about using relational database and tear these csv file in to 3 tables. However, I don't know if I am allowed to modify
+the data, so I didn't go further with this method. If I managed these data with relational database, here are
+my schemas: 
+    * Country(id*, code, name)
+    * Indicator(id*, code, name)
+    * Record(id*, indicatorId, countryId, year, value)
+
+    The provided data shows all different indicators around different country. But it also include some group stats
 which is not country-based such as World or IDA & IBRD total. As I don't under stand much on these group 
 (are they counted as county?), I only exclude all the data with World in the calculation.
 
@@ -58,9 +65,11 @@ the right way to test them, so I didn't write test code for them.
 
 4. __Frontend:__\
 I finished the API server first then I think it's better to have a frontend app to display the data. 
-To do this as easy as possible, I make this with React/Reactstrap(Bootstrap4)/Styled-components. All
+To do this as easy as possible, I use create-react-app with Reactstrap(Bootstrap4)/Styled-components. All
 the codes are related to displaying the data and the interface interaction, so I didn't cover any test code
 on them.
+
+***If you have any question, please contact me via email: [another0219@gmail.com](another0219@gmail.com)***
 
 
 
