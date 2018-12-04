@@ -51,9 +51,9 @@ on my IDE (Intellij), and I use Prettier commonly. So linting shouldn't be a pro
 When I just started, I have thought about using relational database and tear these csv file in to 3 tables. However, I don't know if I am allowed to modify
 the data, so I didn't go further with this method. If I managed these data with relational database, here are
 my schemas: 
-    * Country(id*, code, name)
-    * Indicator(id*, code, name)
-    * Record(id*, indicatorId, countryId, year, value)
+    * Country (**id**, code, name)
+    * Indicator (**id**, code, name)
+    * Record (**id**, *indicatorId*, *countryId*, year, value)
 
     The provided data shows all different indicators around different country. But it also include some group stats
 which is not country-based such as World or IDA & IBRD total. As I don't under stand much on these group 
