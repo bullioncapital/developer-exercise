@@ -7,7 +7,7 @@ I make this into 2 parts, a Node base API server and a React frontend. To get th
 3. Browse [http://localhost:4000](http://localhost:4000) to see the App\
 4. *Use [http://localhost:9999](http://localhost:9999) to access the API.*
 
-*ps. Change the port in .env file, REACT_APP_PORT for the frontend (3.) API_PORT for backend(4.)*
+*p.s. Change the port in .env file, REACT_APP_PORT for the frontend (3.) API_PORT for backend(4.)*
 
 #### API
 This api server contains 2 api:
@@ -27,28 +27,40 @@ Get the year with highest indicator value across the world\
 ***
 
 For the question 2A:
-1. Start the server
-2. Browse [link](http://localhost:8081/get-country-with-highest-avg-value-of-indicator-in-period/SP.URB.GROW?start=1980&end=1990)
+1. Do the instruction
+2. Click on 2A button
+3. The default value in the input is the question you ask for, feel free to change those number.
+4. Click on Get to retrieve the result.
+5. Click on Reset to set all value to default
 
 For the question 2B:
-1. Start the server
-2. Browse [link](http://localhost:8081/get-year-with-highest-value-of-indicator/EN.ATM.CO2E.KT)
+1. Do the instruction
+2. Click on 2B button
+3. The default value in the input is the question you ask for, feel free to change those number.
+4. Click on Get to retrieve the result.
+5. Click on Reset to set all value to default
 
 ## Some Thought
-1. Typescript:\
+1. __Typescript:__\
 As I mentioned in the interview, I used Flow lot and move to Typescript just more than a month. 
-In the most case, they are pretty much the same. But Typescript has more configuration than Flow. So 
-at the linting part, I didn't rely too much on tslint because Eslint integrate quite well with Typescript
-on my IDE (Intellij), and I use Prettier commonly. Linting shouldn't be a problem.
+In the most case, they are pretty much the same. But Typescript has more configuration than Flow. 
+At the linting part, I didn't rely too much on tslint because Eslint integrate quite well with Typescript
+on my IDE (Intellij), and I use Prettier commonly. So linting shouldn't be a problem.
 
-2. Provide data:\
+2. __Provide data:__\
 The data you provide shows all different indicators around different country. But it also include some group stats
 which is not country-based such as World or IDA & IBRD total. As I don't under stand much on these group 
 (are they counted as county?), I only exclude all the data with World in the calculation.
 
-3. Testing:\
+3. __Testing:__\
 I try to cover all of my code with test. But some of the code like Helper or Server config that I couldn't find
 the right way to test them, so I didn't write test code for them.
+
+4. __Frontend:__\
+I finished the API server first then I think it's better to have a frontend app to display the data. 
+To do this as easy as possible, I make this with React/Reactstrap(Bootstrap4)/Styled-components. All
+the codes are related to displaying the data and the interface interaction, so I didn't cover any test code
+on them.
 
 
 
