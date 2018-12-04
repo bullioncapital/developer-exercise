@@ -23,7 +23,7 @@
 /public/hot
 
 # Application configuration.
-/.env*
+#/.env*
 /config/admin-env
 /config/env
 

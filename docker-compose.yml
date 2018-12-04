@@ -9,15 +9,17 @@ services:
     environment:
       - NODE_ENV=production
     expose:
-      - "9999"
-#    ports:
-#      - "8081:9999"
+      - 9999
+    ports:
+      - ${API_PORT}:${API_PORT}
     working_dir: /srv/app/node-server
     command: yarn start
 
   frontend:
     container_name: react
     build: ./client
+    environment:
+      - PORT=${REACT_APP_PORT}
     ports:
       - ${REACT_APP_PORT}:${REACT_APP_PORT}
     links:

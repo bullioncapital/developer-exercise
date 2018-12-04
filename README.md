@@ -1,12 +1,15 @@
 # ABX Developer Exercise
 
 ## Instructions
-I make this into an Node base API server. To get the server running:
+I make this into 2 parts, a Node base API server and a React frontend. To get the service running:
 1. Run `docker-compose up -d`.
 2. Open your browser.
-3. Browse [http://localhost:8081](http://localhost:8081)
+3. Browse [http://localhost:4000](http://localhost:4000) to see the App\
+4. *Use [http://localhost:9999](http://localhost:9999) to access the API.*
 
-## API
+*ps. Change the port in .env file, REACT_APP_PORT for the frontend (3.) API_PORT for backend(4.)*
+
+#### API
 This api server contains 2 api:
 - `/get-country-with-highest-avg-value-of-indicator-in-period/${indicator}?start=${startYear}&end=${endYear}`
 
