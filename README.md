@@ -5,6 +5,18 @@
 
 ## Running the application
 - `docker run developer-exercise`
+- The response will output to the console:
+```
+C:\Users\Christopher\projects\developer-exercise>docker run developer-exercise
+yarn run v1.12.3
+$ ts-node src/main.ts
+┌─────────┬──────────┐
+│ country │ Botswana │
+├─────────┼──────────┤
+│ year    │ 1994     │
+└─────────┴──────────┘
+Done in 4.21s.
+```
 
 ## Instructions
 1. Fork the repository.
