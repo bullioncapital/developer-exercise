@@ -14,3 +14,18 @@
 Note: There is no right or wrong way to achieve this. Please provide instructions on how to run your solution. Please use Docker where appropriate for access to dependencies (Databases, runtimes etc).
 
 If you'd prefer not have this repo public on your Github, feel free to clone it into a private repo with your provider of choice. Give sam.jeston@abx.com view permissions when you are complete.
+
+
+## How to Run this exercise
+
+1. If you already have php installed you can just the script directly:
+
+	1a. Go into the script directory: `cd www/html/`
+	
+	1b. Execute the php script: `php script.php`
+	
+2. Or, use docker with a php and nginx container:
+
+	2a. Run: `docker-compose up -d`
+	
+	2b. Go to your local: http://0.0.0.0/
