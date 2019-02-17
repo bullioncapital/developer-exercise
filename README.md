@@ -36,17 +36,21 @@ I have displayed the results on a page (html). Click on the buttons to reveal th
 
 1. `npm run docker-local`
 2. Go to `localhost:3000` or `<Docker_Machine_IP>:3000`
-3. Use buttons to get answers
-   OR Access `localhost:3000/2a` or `<Docker_Machine_IP>:3000/2a` to see the results
-   Access `localhost:3000/2b` or `<Docker_Machine_IP>:3000/2b` to see the results
+3. Use buttons to get answers, OR:
+
+   3a. Access `localhost:3000/2a` or `<Docker_Machine_IP>:3000/2a` to see the results for 2a
+
+   3b. Access `localhost:3000/2b` or `<Docker_Machine_IP>:3000/2b` to see the results for 2b
 
 ### Local
 
 1. `npm install && npm run start`
 2. Go to `localhost:3000` or `<Docker_Machine_IP>:3000`
-3. Use buttons to get answers
-   OR Access `localhost:3000/2a` or `<Docker_Machine_IP>:3000/2a` to see the results
-   Access `localhost:3000/2b` or `<Docker_Machine_IP>:3000/2b` to see the results
+3. Use buttons to get answers, OR:
+
+   3a. Access `localhost:3000/2a` or `<Docker_Machine_IP>:3000/2a` to see the results for 2a
+
+   3b. Access `localhost:3000/2b` or `<Docker_Machine_IP>:3000/2b` to see the results for 2b
 
 ### Tests
 
