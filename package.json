@@ -6,10 +6,11 @@
     "test": "jest --config ./jest.config.json",
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-    "docker-local-build": "npm run build && docker build -t abx-exercise .",
+    "docker-local-build": "docker build -t abx-exercise .",
     "docker-local-run": "docker run -p 3000:3000 abx-exercise",
     "docker-local": "npm run docker-local-build && npm run docker-local-run",
-    "docker-compose-local": "docker-compose up -d --build"
+    "docker-compose-local": "docker-compose up -d --build",
+    "rimraf": "rimraf"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "jest": "^22.4.4",
+    "rimraf": "^2.6.3",
     "ts-jest": "^22.4.6",
     "typescript": "^2.9.2"
   }
