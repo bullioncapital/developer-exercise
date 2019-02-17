@@ -1,5 +1,6 @@
 import { ICsvDataRange, IDateAndData } from "./commonInterface";
 import { IDateAndValues, IDateAndAverage } from "./2bFunctionsInterface";
+import { deepClone, calculateAverageOfValues } from "./commonFunctions";
 /**
  * This function basically transposes the input so that the output has all the dates with their respective row values
  * This makes it easier for us to work with averaged over the dates column.
@@ -12,11 +13,9 @@ export function combineDatesWithValues(
   countriesDataDate: ICsvDataRange[]
 ): IDateAndValues[] {
   const returningDateAndValues: IDateAndValues[] = []; // init  array
-  let countriesDataDateClone: ICsvDataRange[] = JSON.parse(
-    JSON.stringify(countriesDataDate)
-  ); // quick deep clone alternative
-  countriesDataDateClone.map((countryDataDate: ICsvDataRange) => {
-    countryDataDate.dataToBeObserved.map((dateAndData: IDateAndData) => {
+  let countriesDataDateClone = deepClone(countriesDataDate);
+  countriesDataDateClone.forEach((countryDataDate: ICsvDataRange) => {
+    countryDataDate.dataToBeObserved.forEach((dateAndData: IDateAndData) => {
       var foundData: IDateAndValues = returningDateAndValues.find(
         (returnedDateAndValue: IDateAndValues) => {
           if (returnedDateAndValue.date === dateAndData.date) {
@@ -27,7 +26,7 @@ export function combineDatesWithValues(
         }
       );
       if (!foundData) {
-        // only come in if you have found data above
+        // only come in if you haven't found data above
         returningDateAndValues.push({
           date: dateAndData.date,
           values: [dateAndData.value]
@@ -50,18 +49,14 @@ export function combineDatesWithValues(
 export function deleteMissingValueFields(
   dateAndValuesData: IDateAndValues[]
 ): IDateAndValues[] {
-  let dateAndValuesDataClone: IDateAndValues[] = JSON.parse(
-    JSON.stringify(dateAndValuesData)
-  ); // quick deep clone alternative
-  let returnDateAndValuesData: IDateAndValues[] = [];
-  dateAndValuesDataClone.forEach((data: IDateAndValues) => {
+  let dateAndValuesDataClone: IDateAndValues[] = deepClone(dateAndValuesData);
+  return dateAndValuesDataClone.map((data: IDateAndValues) => {
     // create an array of objects that each have a data and all the values associated with it
-    returnDateAndValuesData.push({
+    return {
       date: data.date,
       values: data.values.filter((value: number) => value !== null) // remove data that is null (no data). As my readme said I'm nto getting rid of everything just the data(my assumption).
-    });
+    };
   });
-  return returnDateAndValuesData;
 }
 /**
  * This function gets the dates that are passed in and then averages the
@@ -74,26 +69,18 @@ export function deleteMissingValueFields(
 export function getDateAveragesAcrossCountries( //countries also means rows...
   dateAndValuesData: IDateAndValues[]
 ): IDateAndAverage[] {
-  let dateAndValuesDataClone: IDateAndValues[] = JSON.parse(
-    JSON.stringify(dateAndValuesData)
-  ); // quick deep clone alternative
-
+  let dateAndValuesDataClone: IDateAndValues[] = deepClone(dateAndValuesData);
   return dateAndValuesDataClone.map((dateAndValues: IDateAndValues) => {
     //return dates with there averages
     return {
       date: dateAndValues.date,
-      average: Number(
-        (
-          dateAndValues.values.reduce(
-            (previous: number, value: number) => previous + value, // add all the values up
-            0
-          ) / dateAndValues.values.length
-        ) // divide the added values buy the length/amount of values there were
-          .toFixed(3) // return only 3 decimal places (most of the data in the csv is 3 decimals.)
+      average: calculateAverageOfValues(
+        dateAndValues.values.map((value: number) => value) // get average of the values
       )
     };
   });
 }
+
 /**
  * This functions takes in an array of dates and averages and then sorts
  * through them to return the object with the highest averages
@@ -103,10 +90,12 @@ export function getDateAveragesAcrossCountries( //countries also means rows...
 export function getHighestDateAverage(
   dateAndAveragesData: IDateAndAverage[]
 ): IDateAndAverage {
-  let dateAndAveragesDataClone: IDateAndAverage[] = JSON.parse(
-    JSON.stringify(dateAndAveragesData)
-  ); // quick deep clone alternative
-
+  // if you call a reducer function with an empty array with no initial value it will crash
+  if (dateAndAveragesData.length === 0) return undefined;
+  let dateAndAveragesDataClone: IDateAndAverage[] = deepClone(
+    dateAndAveragesData
+  );
+  if (dateAndAveragesDataClone.length === 0) return undefined;
   return dateAndAveragesDataClone.reduce(
     (previous: IDateAndAverage, current: IDateAndAverage) => {
       return previous.average > current.average ? previous : current; // keep the object that has the highest average

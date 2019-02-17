@@ -14,7 +14,7 @@ import {
   getHighestDateAverage
 } from "./functions/2bFunctions";
 import { getDataByIndicatorName } from "./functions/commonFunctions";
-const express = require("express");
+import * as express from "express";
 const app = express();
 const port = 3000;
 

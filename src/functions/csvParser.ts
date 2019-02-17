@@ -1,6 +1,7 @@
 import { ICsvRowData, ICsvDataRange } from "./commonInterface";
-const fs = require("fs");
-const csv = require("csv-parser");
+import { deepClone } from "./commonFunctions";
+import { createReadStream } from "fs";
+import * as csv from "csv-parser";
 
 /**
  * This function will return an array fo the csv data that is strongly typed.
@@ -16,9 +17,8 @@ export function parseCsvFile(
 ): Promise<ICsvRowData[]> {
   return new Promise((resolve, reject) => {
     let results: ICsvRowData[] = [];
-    return fs
-      .createReadStream(filePath)
-      .pipe(csv({ skipLines: skipStartingLines })) //skip 4so we don't have errors with the title and name etc. This is hard coded. Could have a user input of how many rows to skip
+    return createReadStream(filePath)
+      .pipe(csv({ skipLines: skipStartingLines })) //skip 4 so we don't have errors with the title and name etc. This is hard coded. Could have a user input of how many rows to skip
       .on("data", data => results.push(data)) // add the data to the results array
       .on("end", () => {
         resolve(results); // resolve the promise
@@ -37,9 +37,9 @@ export function parseCsvFile(
 export function parseJsonAsObject(
   countriesOriginalData: ICsvRowData[]
 ): ICsvDataRange[] {
-  let countriesOriginalDataClone: ICsvRowData[] = JSON.parse(
-    JSON.stringify(countriesOriginalData)
-  ); // quick deep clone alternative
+  let countriesOriginalDataClone: ICsvRowData[] = deepClone(
+    countriesOriginalData
+  );
   return countriesOriginalDataClone.map((countryOriginalData: ICsvRowData) => {
     // build and return object
     return {

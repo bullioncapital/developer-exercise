@@ -1,5 +1,6 @@
 import { ICountryAndAverage } from "./2aFunctionsInterface";
 import { ICsvDataRange, IDateAndData } from "./commonInterface";
+import { deepClone, calculateAverageOfValues } from "./commonFunctions";
 /**
  * This function takes in 2 dates, and the countries data. The Countries data is filtered by the dates and is returns.
  *
@@ -18,7 +19,7 @@ export function getDataBetweenDates(
   endRange: number,
   countriesData: ICsvDataRange[]
 ): ICsvDataRange[] {
-  let dataClone: ICsvDataRange[] = JSON.parse(JSON.stringify(countriesData)); // quick deep clone alternative
+  let dataClone: ICsvDataRange[] = deepClone(countriesData);
   dataClone.map((row: ICsvDataRange) => {
     // remove non needed dates
     row.dataToBeObserved = row.dataToBeObserved.filter(
@@ -41,17 +42,11 @@ export function getDataBetweenDates(
 export function removeCountriesWithMissingData(
   countriesData: ICsvDataRange[]
 ): ICsvDataRange[] {
-  let countriesDataClone: ICsvDataRange[] = JSON.parse(
-    JSON.stringify(countriesData)
-  ); // quick deep clone alternative
-
+  let countriesDataClone: ICsvDataRange[] = deepClone(countriesData);
   return countriesDataClone.filter((countryData: ICsvDataRange) => {
-    return !countryData.dataToBeObserved // `NOT` it, so that includes(false) is false and won't return the data.
-      .map((data: IDateAndData) => {
-        if (data.value === null) return false; //check to see if the value is false.
-        return true;
-      })
-      .includes(false); // if there is a false value in the array it means there was no data on one of that dates.
+    return countryData.dataToBeObserved.every(
+      (data: IDateAndData) => data.value !== null
+    ); // return the date but if any data.value is null don't return anything as we don't want to look at that country anymore
   });
 }
 /**
@@ -64,43 +59,33 @@ export function removeCountriesWithMissingData(
 export function getAverageDataForEachCountry(
   countriesData: ICsvDataRange[]
 ): ICountryAndAverage[] {
-  let countriesDataClone: ICsvDataRange[] = JSON.parse(
-    JSON.stringify(countriesData)
-  ); // quick deep clone alternative
-
+  let countriesDataClone: ICsvDataRange[] = deepClone(countriesData);
   return countriesDataClone.map((countryData: ICsvDataRange) => {
-    let countryDataClone: ICsvDataRange = JSON.parse(
-      JSON.stringify(countryData)
-    ); // quick deep clone alternative
+    let countryDataClone: ICsvDataRange = deepClone(countryData);
     delete countryDataClone.dataToBeObserved; // we don't need the observed data, this will be replaced with the average value
     return Object.assign(countryDataClone, {
-      average: Number(
-        (
-          countryData.dataToBeObserved.reduce(
-            (previous: number, current: IDateAndData) =>
-              previous + current.value, // add all the values up
-            0
-          ) / countryData.dataToBeObserved.length
-        ) // divide the added values buy the length/amount of values there were
-          .toFixed(3) // return only 3 decimal places (most of the data in the csv is 3 decimals.)
-      )
+      average: calculateAverageOfValues(
+        countryData.dataToBeObserved.map((value: IDateAndData) => value.value)
+      ) //create a new object with the averages added.
     });
   });
 }
+
 /**
  * This functions takes in an array of countries and averages and then sorts
  * through them to return the object with the highest averages
+ * can return undefined if an empty array is passed in!
  * @param countriesAverages pass in an array of countries with their averages
  * @return {ICountryAndAverage} return the highest average with its country info
  */
 export const getHighestAverageData = (
   countriesAverages: ICountryAndAverage[]
 ): ICountryAndAverage => {
-  let countriesDataClone: ICountryAndAverage[] = JSON.parse(
-    JSON.stringify(countriesAverages)
-  ); // quick deep clone alternative
-
+  // if you call a reducer function with an empty array with no initial value it will crash
+  if (countriesAverages.length === 0) return undefined;
+  let countriesDataClone: ICountryAndAverage[] = deepClone(countriesAverages);
   return countriesDataClone.reduce(
+    // if you cal this function with an empty error it will crash. there are no checks but usually I would add checks
     (previous: ICountryAndAverage, current: ICountryAndAverage) => {
       return previous.average > current.average ? previous : current; // keep the object that has the highest average
     }

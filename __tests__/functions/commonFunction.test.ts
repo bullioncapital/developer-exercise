@@ -1,7 +1,10 @@
 /**
  * @jest-environment node
  */
-import { getDataByIndicatorName } from "../../src/functions/commonFunctions";
+import {
+  getDataByIndicatorName,
+  calculateAverageOfValues
+} from "../../src/functions/commonFunctions";
 import { ICsvDataRange } from "../../src/functions/commonInterface";
 const data: ICsvDataRange = {
   dataToBeObserved: [
@@ -152,5 +155,8 @@ describe("Testing Functions.ts", () => {
   });
   test("getDataByIndicatorName - test 4", () => {
     expect(getDataByIndicatorName("CO2 emissions (kt)", [])).toEqual([]);
+  });
+  test("getDataByIndicatorName - test 4", () => {
+    expect(calculateAverageOfValues([6, 67, 87, 2, 8])).toEqual(34);
   });
 });
