@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "es2017"
+  },
+  "include": [
+    "./src/**/**/*",
+  ],
+  "exclude": ["node_modules"]
+}

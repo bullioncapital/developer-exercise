@@ -1,0 +1,7 @@
+version: "2.1"
+services:
+  abx-exercise:
+    container_name: abx-exercise
+    build: ./
+    ports:
+      - "3000:3000"
