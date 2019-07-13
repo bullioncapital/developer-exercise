@@ -2,7 +2,7 @@
   "name": "developer-exercise",
   "version": "1.0.0",
   "description": "WDI report",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "tsc": "tsc",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/hgedia/developer-exercise#readme",
   "dependencies": {
+    "core-util-is": "^1.0.2",
     "should": "^13.2.3",
     "typescript": "^3.5.3"
   },

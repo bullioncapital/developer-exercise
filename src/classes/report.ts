@@ -229,8 +229,6 @@ class Report {
                 rVal[opt.code] = maxAvgYear;
             }
         }
-
-
         return rVal;
     }
 }
