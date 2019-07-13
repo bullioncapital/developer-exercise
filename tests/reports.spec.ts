@@ -5,6 +5,7 @@ const path = require('path');
 import 'mocha';
 
 describe('Report testing', function() {
+    /*
     it('should throw if file does not exist', function() {        
         expect(()=> new Report(path.resolve(__dirname,"./reportdata/data9987.csv"),",",4)).to.throw('File does not exist');     
     }); 
@@ -39,17 +40,18 @@ describe('Report testing', function() {
         });   
         
     });
+    */
 
-    /*
+    
     describe('highest "CO2 emissions (kt)', async()=>{
         it('Calculate with all values present', async()=>{
-            let r = new Report(path.resolve(__dirname,"./reportdata/testdata1.csv"),",",3);
+            let r = new Report(path.resolve(__dirname,"./reportdata/data.csv"),",",3);
             let result = await r.generateReport([
-                {code: "HGCO2AVG"}
+                {code: "HGCO2EMYR",options:{}}
             ]);
-            expect(false).to.be.true;
+            //expect(false).to.be.true;
         });
-    
+        /*
         it('calculate with missing elements', async()=>{
             let r = new Report(path.resolve(__dirname,"./reportdata/testdata1.csv"),",",3);
             let result = await r.generateReport([
@@ -64,9 +66,10 @@ describe('Report testing', function() {
                 {code: "HGCO2AVG"}
             ]);
             expect(false).to.be.true;
-        });                
+        }); 
+        */               
     }) 
-    */
+    
    
  });
 
