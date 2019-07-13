@@ -17,7 +17,7 @@ describe('Report testing', function() {
             let result =await r.generateReport([
                 {code: "UBPOPGAVG" , options : {fromYear : 1960, toYear : 1962}}
             ]);
-            expect(Number(result["UBPOPGAVG"])).to.be.equal(2.2358187603801);  
+            expect((result["UBPOPGAVG"])).to.be.equal("Aruba");  
         });        
         
         
@@ -26,7 +26,7 @@ describe('Report testing', function() {
             let result = await r.generateReport([
                 {code: "UBPOPGAVG",options : {fromYear : 1960, toYear : 1962}}
             ]);
-            expect(Number(result["UBPOPGAVG"])).to.be.equal(2.2358187603801);            
+            expect((result["UBPOPGAVG"])).to.be.equal("Afghanistan");  
         });        
         
         
@@ -35,8 +35,7 @@ describe('Report testing', function() {
             let result = await r.generateReport([
                 {code: "UBPOPGAVG",options : {fromYear : 1960, toYear : 1962}}
             ]);
-            expect(Number(result["UBPOPGAVG"])).to.be.equal(-0.26639423195478334)
-            //console.log(result);
+            expect((result["UBPOPGAVG"])).to.be.equal("Afghanistan");
         });   
         
     });
