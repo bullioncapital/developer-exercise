@@ -219,7 +219,7 @@ class Report {
         for(let opt of options){
             
             if(opt.code == "UBPOPGAVG"){
-                rVal[opt.code] = urbAvgPop.value
+                rVal[opt.code] = urbAvgPop.country.name
             }
 
             if(opt.code == "HGCO2EMYR"){

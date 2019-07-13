@@ -2,11 +2,12 @@
   "name": "developer-exercise",
   "version": "1.0.0",
   "description": "WDI report",
-  "main": "app.js",
+  "main": "./dist/app.js",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "tsc": "tsc",
-    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "start" : "gulp && node ./dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
     "mocha": "^6.1.4",
     "neat-csv": "^5.1.0",
     "prettier": "^1.18.2",

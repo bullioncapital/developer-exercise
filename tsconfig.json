@@ -1,4 +1,8 @@
 {
+  "files": [
+    "src/classes/report.ts",
+    "src/app.ts"
+  ],
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
