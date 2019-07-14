@@ -1,9 +1,10 @@
-const csv = require('csvtojson')
-const fs = require('fs')
+import { Json } from '@types'
+const csv = require('csvtojson');
+const fs = require('fs');
 
-//TODO namespaces
+
 interface ReportOptions{
-    code : string,
+    code    : string,
     options : Json    
 }
 
@@ -21,22 +22,19 @@ interface CO2Emission{
     value : number,
     count : number
 }
+
+
 type CO2EmissionMap = Record<number, CO2Emission>;
 
 
-interface Json {
-    [x: string]: string|number|boolean|Date|Json|JsonArray;
-}
-interface JsonArray extends Array<string|number|boolean|Date|Json|JsonArray> { }
 
 
 class Report {
-
     private absFilePath : string;
     private delimiter : string;
     private skipLn : number;
-    //TODO move out and init based on report code perhaps?
-    private static headers: string[]  = [
+
+    private static readonly headers: string[]  = [
         "Country Name",
         "Country Code",
         "Indicator Name",
@@ -99,7 +97,8 @@ class Report {
         "2015",
         "2016",
         "2017"
-    ]
+    ];
+
 
 
     constructor(absFilePath:string,delimiter:string,skipLn: number) {
@@ -149,7 +148,6 @@ class Report {
     /*
     The year with the highest "CO2 emissions (kt)", averaged across each country for which data is available.
     */
-   //TODO : Incorrect logic in computation , needs to be fixed
     private highestAvgCO2EmissionsYear(data:Json,fromYear:number , toYear:number,co2Emission:CO2EmissionMap){
 
         for(let year = fromYear; year <= toYear;++year){

@@ -17,9 +17,19 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
 
 ## Solution Instructions
 
+### Docker
+
 1. Ensure docker daemon is running.
-2. Pull docker image from docker hub :
+2. Pull docker image from docker hub : 
 ```docker pull hgedia/abx-developer-exercise```
 3. Run the container :
 ```docker run hgedia/abx-developer-exercise```
 
+### Testing Locally
+
+1. Clone the repository : ```git clone git@github.com:hgedia/developer-exercise.git```
+2. Execute
+    cd developer-exercise
+	npm i gulp-cli -g
+	npm i
+	npm run test

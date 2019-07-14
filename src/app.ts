@@ -13,6 +13,6 @@ const path = require('path');
         console.log("The country with the highest average Urban population growth (annual %) : " +  result["UBPOPGAVG"]);
     }
     if(result["HGCO2EMYR"]){
-        console.log("The year with the highest CO2 emissions (kt), averaged across each country : " +  result["HGCO2EMYR"]);
+        console.log("The Year with the highest CO2 emissions (kt), averaged across each country : " +  result["HGCO2EMYR"]);
     }
 })()
