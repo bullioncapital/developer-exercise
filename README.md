@@ -17,9 +17,10 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
 
 ## Solution Instructions
 
+
 ### Docker
 
-1. Ensure docker daemon is running.
+1. Ensure [docker](https://docs.docker.com/v18.03/) is installed and daemon is running.
 2. Pull docker image from docker hub : 
    ```
    docker pull hgedia/abx-developer-exercise
@@ -30,6 +31,9 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
    ```
 
 ### Testing Locally
+
+Please ensure you have [npm](https://www.npmjs.com) >= 10.0.
+
 
 1. Clone the repository : 
    ```
