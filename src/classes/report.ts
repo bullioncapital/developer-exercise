@@ -102,15 +102,16 @@ class WDIReport {
     private static readonly IND_URB_POP_GROWTH = 'SP.URB.GROW';
     private static readonly IND_CO2_EMISSIONS = 'EN.ATM.CO2E.KT';
 
-   /**
-   * @remarks
-   *
-   * The `constructor` member implements the initialization of the Report.
-   *
-   * @param absFilePath - Absolute path of the csv file
-   * @param delimiter -  CSV file delimiter
-   * @param skipLn - Number of lines to skip in the file to reach the first row. New lines are ignored automatically, headers are defined locally above
-   */
+    /**
+     * @remarks
+     *
+     * The `constructor` member implements the initialization of the Report.
+     *
+     * @param absFilePath - Absolute path of the csv file
+     * @param delimiter -  CSV file delimiter
+     * @param skipLn - Number of lines to skip in the file to reach the first row. New lines are ignored automatically, headers are defined
+     *                 locally above
+     */
     constructor(absFilePath: string, delimiter: string, skipLn: number) {
         this.absFilePath = absFilePath;
         this.delimiter = delimiter;
@@ -120,23 +121,19 @@ class WDIReport {
         }
     }
 
-    /*
-    The country with the highest average "Urban population growth (annual %)" between 1980 and 1990. 
-    Exclude countries where any data entry for this time range is missing.
-    */
+    /**
+     * @remarks
+     *
+     * The `computeAvgUrbanPopGrowthCountry` computes and stores the country with highest average urban population between year ranges in
+     * last parameter used as an accumulator. Any country which does not have an entry in the specified range is excluded form the calculation
+     *
+     *
+     * @param data - JSON object of the line for which contains population data
+     * @param fromYear -  Start of year range.
+     * @param toYear - End of year range
+     * @param urbAvgPop - Accumulator to store the highest average growth encountered so far
+     */
 
-   /**
-   * @remarks
-   *
-   * The `computeAvgUrbanPopGrowthCountry` computes and stores the country with highest average urban population between year ranges in
-   * last parameter used as an accumulator. Any country which does not have an entry in the specified range is excluded form the calculation
-   * 
-   *
-   * @param data - JSON object of the line for which contains population data
-   * @param fromYear -  Start of year range.
-   * @param toYear - End of year range
-   * @param urbAvgPop - Accumulator to store the highest average growth encountered so far
-   */    
     private computeAvgUrbanPopGrowthCountry(data: Json, fromYear: number, toYear: number, urbAvgPop: UrbanPopResult) {
         let total = 0;
 
@@ -157,16 +154,17 @@ class WDIReport {
         return;
     }
 
-   /**
-   * @remarks
-   *
-   * The `doesValueExist`  is a helper to see if a value exist at a particular column in the CSV
-   * 
-   *
-   * @param data - JSON object of the line for which contains data
-   * @param field -  Heading of of the column for which we need to check data. ex data['Indicator Name'] 
-   * @returns boolean - Accumulator to store the highest average growth encountered so far
-   */       
+    /**
+     * @remarks
+     *
+     * The `doesValueExist`  is a helper to see if a value exist at a particular column in the CSV
+     *
+     *
+     * @param data - JSON object of the line for which contains data
+     * @param field -  Heading of of the column for which we need to check data. ex data['Indicator Name']
+     * @returns boolean - Accumulator to store the highest average growth encountered so far
+     */
+
     private doesValueExist(data: Json, field: string): boolean {
         if (data[field] === '' || data[field] == undefined || data[field] == null) {
             return false;
@@ -174,19 +172,20 @@ class WDIReport {
         return true;
     }
 
-   /**
-   * @remarks
-   *
-   * The `accumulateAvgCO2EmissionsYear`  is a helper to create a map of emissions/year across countries for the given year range. The count is 
-   * increased only if the country has emission data. Absense of an entry for a year will not impact the average computation. The param `co2Emission` 
-   * is used as an accumulator across calls.
-   * 
-   *
-   * @param data - JSON object of the line for which contains data
-   * @param fromYear -  Start of year range.
-   * @param toYear - End of year range
-   * @param co2Emission -  Heading of of the column for which we need to check data. ex data['Indicator Name'] 
-   */      
+    /**
+     * @remarks
+     *
+     * The `accumulateAvgCO2EmissionsYear`  is a helper to create a map of emissions/year across countries for the given year range.
+     * The count is increased only if the country has emission data. Absense of an entry for a year will not impact the average
+     * computation. The param `co2Emission` is used as an accumulator across calls.
+     *
+     *
+     * @param data - JSON object of the line for which contains data
+     * @param fromYear -  Start of year range.
+     * @param toYear - End of year range
+     * @param co2Emission -  Heading of of the column for which we need to check data. ex data['Indicator Name']
+     */
+
     private accumulateAvgCO2EmissionsYear(data: Json, fromYear: number, toYear: number, co2Emission: CO2EmissionMap) {
         for (let year = fromYear; year <= toYear; ++year) {
             if (co2Emission[year] === undefined) {
@@ -202,16 +201,16 @@ class WDIReport {
         }
     }
 
-   /**
-   * @remarks
-   *
-   * The `computeHigestAvgCO2EmissionsYear`  computes the highest average emission for the year for the given year range 
-   *
-   * @param co2Emission - Map of yearly emissions across the range.
-   * @param fromYear -  Start of year range.
-   * @param toYear - End of year range
-   * @returns number -  The year with maximum average CO2 emissions.
-   */
+    /**
+     * @remarks
+     *
+     * The `computeHigestAvgCO2EmissionsYear`  computes the highest average emission for the year for the given year range
+     *
+     * @param co2Emission - Map of yearly emissions across the range.
+     * @param fromYear -  Start of year range.
+     * @param toYear - End of year range
+     * @returns number -  The year with maximum average CO2 emissions.
+     */
     private computeHigestAvgCO2EmissionsYear(co2Emission: CO2EmissionMap, fromYear: number, toYear: number): number {
         let maxAverage = -1;
         let maxAvgYear = -1;
@@ -227,14 +226,15 @@ class WDIReport {
         return maxAvgYear;
     }
 
-   /**
-   * @remarks
-   *
-   * The `analyseReport` is the entry point to analyseReport a Word Development Indicators report.
-   *
-   * @param options - This structure takes a report code and options (if any) for the report.See `WDIReportOptions` for format. 
-   * @returns Json -  Json type which has the results of parsing the report.
-   */    
+    /**
+     * @remarks
+     *
+     * The `analyseReport` is the entry point to analyseReport a Word Development Indicators report.
+     *
+     * @param options - This structure takes a report code and options (if any) for the report.See `WDIReportOptions` for format.
+     * @returns Json -  Json type which has the results of parsing the report.
+     */
+
     public async analyseReport(options: WDIReportOptions[]): Promise<Json> {
         let lines = 0;
         let urbAvgPop: UrbanPopResult = {} as any;
