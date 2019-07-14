@@ -29,7 +29,9 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
 
 1. Clone the repository : ```git clone git@github.com:hgedia/developer-exercise.git```
 2. Execute
-    cd developer-exercise
+    ```
+	cd developer-exercise
 	npm i gulp-cli -g
 	npm i
 	npm run test
+	```

@@ -2,9 +2,14 @@ import { Json } from '@types'
 const csv = require('csvtojson');
 const fs = require('fs');
 
+enum WEIReportCodes {
+    HigestUrbanPopAvgGrowthCountry,
+    HighestCO2EmissionsYear
+}
+
 
 interface ReportOptions{
-    code    : string,
+    code    : WEIReportCodes,
     options : Json    
 }
 
@@ -23,10 +28,7 @@ interface CO2Emission{
     count : number
 }
 
-
 type CO2EmissionMap = Record<number, CO2Emission>;
-
-
 
 
 class Report {
@@ -98,7 +100,6 @@ class Report {
         "2016",
         "2017"
     ];
-
 
 
     constructor(absFilePath:string,delimiter:string,skipLn: number) {
@@ -202,9 +203,9 @@ class Report {
                 //console.log(JSON.stringify(data))
                 for(let opt of options){
                     //TODO enum/const
-                    if(String(data["Indicator Code"]) === "SP.URB.GROW" && opt.code == "UBPOPGAVG"){
+                    if(String(data["Indicator Code"]) === "SP.URB.GROW" && opt.code == WEIReportCodes.HigestUrbanPopAvgGrowthCountry){
                         this.highestAvgUrbanPopGrowthCountry(data,Number(opt.options.fromYear),Number(opt.options.toYear),urbAvgPop);                    
-                    } else if(String(data["Indicator Code"]) === "EN.ATM.CO2E.KT" && opt.code == "HGCO2EMYR"){
+                    } else if(String(data["Indicator Code"]) === "EN.ATM.CO2E.KT" && opt.code == WEIReportCodes.HighestCO2EmissionsYear){
                         let fromYear: number = Number(opt.options.fromYear);
                         let toYear: number = Number(opt.options.toYear);                      
                         this.highestAvgCO2EmissionsYear(data,fromYear,toYear,co2Emission);
@@ -215,12 +216,12 @@ class Report {
         .on('done', ()=> {});          
         let rVal: Json = {};
         for(let opt of options){
-            
-            if(opt.code == "UBPOPGAVG"){
+
+            if(opt.code == WEIReportCodes.HigestUrbanPopAvgGrowthCountry){
                 rVal[opt.code] = urbAvgPop.country.name
             }
 
-            if(opt.code == "HGCO2EMYR"){
+            if(opt.code == WEIReportCodes.HighestCO2EmissionsYear){
                 let fromYear: number = Number(opt.options.fromYear);
                 let toYear: number = Number(opt.options.toYear); 
                 let maxAvgYear = this.computeHigestAvgCO2EmissionsYear(co2Emission,fromYear,toYear);
@@ -231,4 +232,4 @@ class Report {
     }
 }
 
-export { Report,Json };
+export { Report,WEIReportCodes };
