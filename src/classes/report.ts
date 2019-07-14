@@ -5,6 +5,7 @@ const fs = require('fs');
 enum WDIReportCodes {
     HigestUrbanPopAvgGrowthCountry,
     HighestCO2EmissionsYear,
+    Error,
 }
 
 interface WDIReportOptions {
@@ -105,12 +106,12 @@ class WDIReport {
     /**
      * @remarks
      *
-     * The `constructor` member implements the initialization of the Report.
+     * The `constructor` member implements the initialization of the Report. Throws if the file is not found
      *
      * @param absFilePath - Absolute path of the csv file
      * @param delimiter -  CSV file delimiter
      * @param skipLn - Number of lines to skip in the file to reach the first row. New lines are ignored automatically, headers are defined
-     *                 locally above
+     *                 locally above.
      */
     constructor(absFilePath: string, delimiter: string, skipLn: number) {
         this.absFilePath = absFilePath;
@@ -232,7 +233,8 @@ class WDIReport {
      * The `analyseReport` is the entry point to analyseReport a Word Development Indicators report.
      *
      * @param options - This structure takes a report code and options (if any) for the report.See `WDIReportOptions` for format.
-     * @returns Json -  Json type which has the results of parsing the report.
+     * @returns Json -  Json type which has the results of parsing the report. On Error WDIReportCodes.Error key is populated
+     * and should be checked first before processing further
      */
 
     public async analyseReport(options: WDIReportOptions[]): Promise<Json> {
@@ -240,55 +242,67 @@ class WDIReport {
         let urbAvgPop: UrbanPopResult = {} as any;
         urbAvgPop.country = {} as any;
         let co2Emission: CO2EmissionMap = {};
+        let rVal: Json = {};
 
-        const csvData = await csv(
-            {
-                noheader: true,
-                headers: WDIReport.headers,
-                delimiter: this.delimiter,
-            },
-            { objectMode: true },
-        )
-            .fromFile(this.absFilePath)
-            .on('data', (data: Json) => {
-                if (lines < this.skipLn) {
-                    ++lines;
-                } else {
-                    for (let opt of options) {
-                        if (
-                            String(data['Indicator Code']) === WDIReport.IND_URB_POP_GROWTH &&
-                            opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry
-                        ) {
-                            this.computeAvgUrbanPopGrowthCountry(
-                                data,
-                                Number(opt.options.fromYear),
-                                Number(opt.options.toYear),
-                                urbAvgPop,
-                            );
-                        } else if (
-                            String(data['Indicator Code']) === WDIReport.IND_CO2_EMISSIONS &&
-                            opt.code == WDIReportCodes.HighestCO2EmissionsYear
-                        ) {
-                            let fromYear = Number(opt.options.fromYear);
-                            let toYear = Number(opt.options.toYear);
-                            this.accumulateAvgCO2EmissionsYear(data, fromYear, toYear, co2Emission);
+        try {
+            const csvData = await csv(
+                {
+                    noheader: true,
+                    headers: WDIReport.headers,
+                    delimiter: this.delimiter,
+                },
+                { objectMode: true },
+            )
+                .fromFile(this.absFilePath)
+                .on('data', (data: Json) => {
+                    if (lines < this.skipLn) {
+                        ++lines;
+                    } else {
+                        for (let opt of options) {
+                            if (
+                                String(data['Indicator Code']) === WDIReport.IND_URB_POP_GROWTH &&
+                                opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry
+                            ) {
+                                this.computeAvgUrbanPopGrowthCountry(
+                                    data,
+                                    Number(opt.options.fromYear),
+                                    Number(opt.options.toYear),
+                                    urbAvgPop,
+                                );
+                            } else if (
+                                String(data['Indicator Code']) === WDIReport.IND_CO2_EMISSIONS &&
+                                opt.code == WDIReportCodes.HighestCO2EmissionsYear
+                            ) {
+                                let fromYear = Number(opt.options.fromYear);
+                                let toYear = Number(opt.options.toYear);
+                                this.accumulateAvgCO2EmissionsYear(data, fromYear, toYear, co2Emission);
+                            }
                         }
                     }
-                }
-            })
-            .on('done', () => {});
-        let rVal: Json = {};
-        for (let opt of options) {
-            if (opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry) {
-                rVal[opt.code] = urbAvgPop.country.name;
-            }
+                })
+                .on('error', (err: any) => {
+                    console.error('Error occured in parsing csv : ' + JSON.stringify(err));
+                    rVal[WDIReportCodes.Error] = JSON.stringify(err);
+                    return rVal;
+                });
 
-            if (opt.code == WDIReportCodes.HighestCO2EmissionsYear) {
-                let fromYear = Number(opt.options.fromYear);
-                let toYear = Number(opt.options.toYear);
-                let maxAvgYear = this.computeHigestAvgCO2EmissionsYear(co2Emission, fromYear, toYear);
-                rVal[opt.code] = maxAvgYear;
+            //Populate return structure once data has been gathered or computed
+            for (let opt of options) {
+                if (opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry) {
+                    rVal[opt.code] = urbAvgPop.country.name;
+                }
+
+                if (opt.code == WDIReportCodes.HighestCO2EmissionsYear) {
+                    let fromYear = Number(opt.options.fromYear);
+                    let toYear = Number(opt.options.toYear);
+                    let maxAvgYear = this.computeHigestAvgCO2EmissionsYear(co2Emission, fromYear, toYear);
+                    rVal[opt.code] = maxAvgYear;
+                }
             }
+            return rVal;
+        } catch (err) {
+            console.error('Error occured in processing : ' + JSON.stringify(err));
+            rVal[WDIReportCodes.Error] = JSON.stringify(err);
         }
         return rVal;
     }

@@ -8,6 +8,11 @@ import path = require('path');
         { code: WDIReportCodes.HighestCO2EmissionsYear, options: { fromYear: 1960, toYear: 2017 } },
     ]);
 
+    if (result[WDIReportCodes.Error]) {
+        console.log('Report could not be analyzed to to error in processing : ' + result[WDIReportCodes.Error]);
+        return;
+    }
+
     if (result[WDIReportCodes.HigestUrbanPopAvgGrowthCountry]) {
         console.log(
             'The country with the highest average Urban population growth (annual %) : ' +
@@ -20,4 +25,5 @@ import path = require('path');
                 result[WDIReportCodes.HighestCO2EmissionsYear],
         );
     }
+    return;
 })();
