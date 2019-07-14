@@ -2,13 +2,13 @@ import { Json } from '@types';
 const csv = require('csvtojson');
 const fs = require('fs');
 
-enum WEIReportCodes {
+enum WDIReportCodes {
     HigestUrbanPopAvgGrowthCountry,
     HighestCO2EmissionsYear,
 }
 
-interface ReportOptions {
-    code: WEIReportCodes;
+interface WDIReportOptions {
+    code: WDIReportCodes;
     options: Json;
 }
 
@@ -17,7 +17,7 @@ interface Country {
     name: string;
 }
 
-interface UprbanPopResult {
+interface UrbanPopResult {
     value: number;
     country: Country;
 }
@@ -29,7 +29,7 @@ interface CO2Emission {
 
 type CO2EmissionMap = Record<number, CO2Emission>;
 
-class Report {
+class WDIReport {
     private absFilePath: string;
     private delimiter: string;
     private skipLn: number;
@@ -102,6 +102,15 @@ class Report {
     private static readonly IND_URB_POP_GROWTH = 'SP.URB.GROW';
     private static readonly IND_CO2_EMISSIONS = 'EN.ATM.CO2E.KT';
 
+   /**
+   * @remarks
+   *
+   * The `constructor` member implements the initialization of the Report.
+   *
+   * @param absFilePath - Absolute path of the csv file
+   * @param delimiter -  CSV file delimiter
+   * @param skipLn - Number of lines to skip in the file to reach the first row. New lines are ignored automatically, headers are defined locally above
+   */
     constructor(absFilePath: string, delimiter: string, skipLn: number) {
         this.absFilePath = absFilePath;
         this.delimiter = delimiter;
@@ -115,7 +124,20 @@ class Report {
     The country with the highest average "Urban population growth (annual %)" between 1980 and 1990. 
     Exclude countries where any data entry for this time range is missing.
     */
-    private computeAvgUrbanPopGrowthCountry(data: Json, fromYear: number, toYear: number, urbAvgPop: UprbanPopResult) {
+
+   /**
+   * @remarks
+   *
+   * The `computeAvgUrbanPopGrowthCountry` computes and stores the country with highest average urban population between year ranges in
+   * last parameter used as an accumulator. Any country which does not have an entry in the specified range is excluded form the calculation
+   * 
+   *
+   * @param data - JSON object of the line for which contains population data
+   * @param fromYear -  Start of year range.
+   * @param toYear - End of year range
+   * @param urbAvgPop - Accumulator to store the highest average growth encountered so far
+   */    
+    private computeAvgUrbanPopGrowthCountry(data: Json, fromYear: number, toYear: number, urbAvgPop: UrbanPopResult) {
         let total = 0;
 
         for (let year = fromYear; year <= toYear; ++year) {
@@ -135,6 +157,16 @@ class Report {
         return;
     }
 
+   /**
+   * @remarks
+   *
+   * The `doesValueExist`  is a helper to see if a value exist at a particular column in the CSV
+   * 
+   *
+   * @param data - JSON object of the line for which contains data
+   * @param field -  Heading of of the column for which we need to check data. ex data['Indicator Name'] 
+   * @returns boolean - Accumulator to store the highest average growth encountered so far
+   */       
     private doesValueExist(data: Json, field: string): boolean {
         if (data[field] === '' || data[field] == undefined || data[field] == null) {
             return false;
@@ -142,9 +174,19 @@ class Report {
         return true;
     }
 
-    /*
-    The year with the highest "CO2 emissions (kt)", averaged across each country for which data is available.
-    */
+   /**
+   * @remarks
+   *
+   * The `accumulateAvgCO2EmissionsYear`  is a helper to create a map of emissions/year across countries for the given year range. The count is 
+   * increased only if the country has emission data. Absense of an entry for a year will not impact the average computation. The param `co2Emission` 
+   * is used as an accumulator across calls.
+   * 
+   *
+   * @param data - JSON object of the line for which contains data
+   * @param fromYear -  Start of year range.
+   * @param toYear - End of year range
+   * @param co2Emission -  Heading of of the column for which we need to check data. ex data['Indicator Name'] 
+   */      
     private accumulateAvgCO2EmissionsYear(data: Json, fromYear: number, toYear: number, co2Emission: CO2EmissionMap) {
         for (let year = fromYear; year <= toYear; ++year) {
             if (co2Emission[year] === undefined) {
@@ -160,6 +202,16 @@ class Report {
         }
     }
 
+   /**
+   * @remarks
+   *
+   * The `computeHigestAvgCO2EmissionsYear`  computes the highest average emission for the year for the given year range 
+   *
+   * @param co2Emission - Map of yearly emissions across the range.
+   * @param fromYear -  Start of year range.
+   * @param toYear - End of year range
+   * @returns number -  The year with maximum average CO2 emissions.
+   */
     private computeHigestAvgCO2EmissionsYear(co2Emission: CO2EmissionMap, fromYear: number, toYear: number): number {
         let maxAverage = -1;
         let maxAvgYear = -1;
@@ -175,16 +227,24 @@ class Report {
         return maxAvgYear;
     }
 
-    public async generateReport(options: ReportOptions[]): Promise<Json> {
+   /**
+   * @remarks
+   *
+   * The `analyseReport` is the entry point to analyseReport a Word Development Indicators report.
+   *
+   * @param options - This structure takes a report code and options (if any) for the report.See `WDIReportOptions` for format. 
+   * @returns Json -  Json type which has the results of parsing the report.
+   */    
+    public async analyseReport(options: WDIReportOptions[]): Promise<Json> {
         let lines = 0;
-        let urbAvgPop: UprbanPopResult = {} as any;
+        let urbAvgPop: UrbanPopResult = {} as any;
         urbAvgPop.country = {} as any;
         let co2Emission: CO2EmissionMap = {};
 
         const csvData = await csv(
             {
                 noheader: true,
-                headers: Report.headers,
+                headers: WDIReport.headers,
                 delimiter: this.delimiter,
             },
             { objectMode: true },
@@ -196,8 +256,8 @@ class Report {
                 } else {
                     for (let opt of options) {
                         if (
-                            String(data['Indicator Code']) === Report.IND_URB_POP_GROWTH &&
-                            opt.code == WEIReportCodes.HigestUrbanPopAvgGrowthCountry
+                            String(data['Indicator Code']) === WDIReport.IND_URB_POP_GROWTH &&
+                            opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry
                         ) {
                             this.computeAvgUrbanPopGrowthCountry(
                                 data,
@@ -206,8 +266,8 @@ class Report {
                                 urbAvgPop,
                             );
                         } else if (
-                            String(data['Indicator Code']) === Report.IND_CO2_EMISSIONS &&
-                            opt.code == WEIReportCodes.HighestCO2EmissionsYear
+                            String(data['Indicator Code']) === WDIReport.IND_CO2_EMISSIONS &&
+                            opt.code == WDIReportCodes.HighestCO2EmissionsYear
                         ) {
                             let fromYear = Number(opt.options.fromYear);
                             let toYear = Number(opt.options.toYear);
@@ -219,11 +279,11 @@ class Report {
             .on('done', () => {});
         let rVal: Json = {};
         for (let opt of options) {
-            if (opt.code == WEIReportCodes.HigestUrbanPopAvgGrowthCountry) {
+            if (opt.code == WDIReportCodes.HigestUrbanPopAvgGrowthCountry) {
                 rVal[opt.code] = urbAvgPop.country.name;
             }
 
-            if (opt.code == WEIReportCodes.HighestCO2EmissionsYear) {
+            if (opt.code == WDIReportCodes.HighestCO2EmissionsYear) {
                 let fromYear = Number(opt.options.fromYear);
                 let toYear = Number(opt.options.toYear);
                 let maxAvgYear = this.computeHigestAvgCO2EmissionsYear(co2Emission, fromYear, toYear);
@@ -234,4 +294,4 @@ class Report {
     }
 }
 
-export { Report, WEIReportCodes };
+export { WDIReport, WDIReportCodes };
