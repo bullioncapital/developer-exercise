@@ -21,13 +21,20 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
 
 1. Ensure docker daemon is running.
 2. Pull docker image from docker hub : 
-```docker pull hgedia/abx-developer-exercise```
+   ```
+   docker pull hgedia/abx-developer-exercise
+   ```
 3. Run the container :
-```docker run hgedia/abx-developer-exercise```
+   ```
+   docker run hgedia/abx-developer-exercise
+   ```
 
 ### Testing Locally
 
-1. Clone the repository : ```git clone git@github.com:hgedia/developer-exercise.git```
+1. Clone the repository : 
+   ```
+   git clone git@github.com:hgedia/developer-exercise.git
+   ```
 2. Execute
     ```
 	cd developer-exercise
@@ -35,3 +42,8 @@ If you'd prefer not have this repo public on your Github, feel free to clone it 
 	npm i
 	npm run test
 	```
+3. To run the solition , execute : 
+   ```
+   npm start
+   ```
+	

@@ -115,7 +115,7 @@ class Report {
     The country with the highest average "Urban population growth (annual %)" between 1980 and 1990. 
     Exclude countries where any data entry for this time range is missing.
     */
-    private highestAvgUrbanPopGrowthCountry(data: Json, fromYear: number, toYear: number, urbAvgPop: UprbanPopResult) {
+    private computeAvgUrbanPopGrowthCountry(data: Json, fromYear: number, toYear: number, urbAvgPop: UprbanPopResult) {
         let total = 0;
 
         for (let year = fromYear; year <= toYear; ++year) {
@@ -145,7 +145,7 @@ class Report {
     /*
     The year with the highest "CO2 emissions (kt)", averaged across each country for which data is available.
     */
-    private highestAvgCO2EmissionsYear(data: Json, fromYear: number, toYear: number, co2Emission: CO2EmissionMap) {
+    private accumulateAvgCO2EmissionsYear(data: Json, fromYear: number, toYear: number, co2Emission: CO2EmissionMap) {
         for (let year = fromYear; year <= toYear; ++year) {
             if (co2Emission[year] === undefined) {
                 co2Emission[year] = {} as any;
@@ -199,7 +199,7 @@ class Report {
                             String(data['Indicator Code']) === Report.IND_URB_POP_GROWTH &&
                             opt.code == WEIReportCodes.HigestUrbanPopAvgGrowthCountry
                         ) {
-                            this.highestAvgUrbanPopGrowthCountry(
+                            this.computeAvgUrbanPopGrowthCountry(
                                 data,
                                 Number(opt.options.fromYear),
                                 Number(opt.options.toYear),
@@ -211,7 +211,7 @@ class Report {
                         ) {
                             let fromYear = Number(opt.options.fromYear);
                             let toYear = Number(opt.options.toYear);
-                            this.highestAvgCO2EmissionsYear(data, fromYear, toYear, co2Emission);
+                            this.accumulateAvgCO2EmissionsYear(data, fromYear, toYear, co2Emission);
                         }
                     }
                 }
