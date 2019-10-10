@@ -8,7 +8,6 @@ enum Indexes {
   eightyIndex = 24,
   nightyIndex = 34
 }
-
 enum IndicatorCode {
   annualUrbanPopulationGrowth = "SP.URB.GROW",
   highestCO2EmissionsK2 = "EN.ATM.CO2E.KT"
@@ -69,12 +68,14 @@ const crossAggregationCounter = (
   return currentValue;
 };
 
+// Parse the CSV into Json
 fs.createReadStream("data.csv")
   .pipe(csvParser())
   .on("data", row => data.push(row))
   .on("end", () => {
+    // Calculate output
     console.log(
-      "computing highest highest average 'Urban population growth (annual %)' between 1980 and 1990"
+      "\nComputing highest highest average 'Urban population growth (annual %)' between 1980 and 1990"
     );
     const annualUrbanGrowth = data
       .filter((row, index) =>
@@ -115,5 +116,16 @@ fs.createReadStream("data.csv")
     )
       co2EmissionAverages.push(+co2EmissionTotals[i]! / +co2EmissionCounts[i]!);
 
-    console.log(co2EmissionAverages);
+    const highestAverageCO2Emision = Math.max(...co2EmissionAverages);
+    const highestAverageCO2EmissionYear =
+      data[3][
+        co2EmissionAverages.indexOf(highestAverageCO2Emision) +
+          Indexes.minimumYearIndex
+      ];
+
+    console.log(
+      `\nYear: ${highestAverageCO2EmissionYear}\nHighest Average CO2 Emission: ${highestAverageCO2Emision.toFixed(
+        4
+      )}`
+    );
   });
