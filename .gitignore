@@ -1,0 +1,14 @@
+node_modules
+.vscode
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+.DS_Store
+scratch/
+.log
+yarn-error.log
+app.js
+app.d.ts 
+app.js.map
+models.js
+models.d.ts 
+models.js.map
