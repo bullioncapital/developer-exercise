@@ -1,0 +1,23 @@
+{
+  "name": "developer-test",
+  "version": "1.0.0",
+  "description": "Developer test for bullion capital",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project tsconfig.json",
+    "start": "node dist/app.js"
+  },
+  "author": "Wafi Hossain",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^3.0.2",
+    "csv-parser": "^2.3.1",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.4",
+    "@types/node": "^12.7.12",
+    "tslib": "^1.9.3"
+  }
+}
