@@ -1,3 +1,16 @@
+# ABX Developer Exercise Solution
+
+## instruction
+
+1. make sure npm, node.js, and typescript are installed.
+2. npm install
+3. npm run build
+4. npm run start
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
 # ABX Developer Exercise
 
 ## Instructions
