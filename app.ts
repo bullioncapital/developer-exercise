@@ -6,7 +6,8 @@ enum Indexes {
   maximumIndicatorIndex = 62,
   indicatorCode = 3,
   eightyIndex = 24,
-  nightyIndex = 34
+  nightyIndex = 34,
+  metaDataIndex = 3
 }
 enum IndicatorCode {
   annualUrbanPopulationGrowth = "SP.URB.GROW",
@@ -118,7 +119,7 @@ fs.createReadStream("data.csv")
 
     const highestAverageCO2Emision = Math.max(...co2EmissionAverages);
     const highestAverageCO2EmissionYear =
-      data[3][
+      data[Indexes.metaDataIndex][
         co2EmissionAverages.indexOf(highestAverageCO2Emision) +
           Indexes.minimumYearIndex
       ];
