@@ -97,7 +97,7 @@ fs.createReadStream("data.csv")
     );
 
     console.log(
-      "computing The year with the highest 'CO2 emissions (kt)', averaged across each country for which data is available."
+      "\nComputing The year with the highest 'CO2 emissions (kt)', averaged across each country for which data is available."
     );
     const co2EmissionYears = data.filter((row, index) =>
       filterData(row, index, IndicatorCode.highestCO2EmissionsK2)
