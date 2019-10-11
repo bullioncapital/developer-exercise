@@ -20,6 +20,8 @@ type Data = {
 const urbanGrowthAverages: number[] = [];
 const data: Data[] = [];
 const co2EmissionCounts: Data = {};
+for (let i = Indexes.minimumYearIndex; i <= Indexes.maximumIndicatorIndex; i++)
+  co2EmissionCounts[i] = "0";
 
 const checkIfDataExistsForTimeRange = (row: Data): boolean => {
   for (let i = Indexes.eightyIndex; i <= Indexes.nightyIndex; i++)
@@ -55,15 +57,14 @@ const crossAggregator = (previousValue: Data, currentValue: Data): Data => {
 const crossAggregationCounter = (
   _previousValue: Data,
   currentValue: Data,
-  index: number
+  _index: number
 ): Data => {
   for (
     let i = Indexes.minimumYearIndex;
     i <= Indexes.maximumIndicatorIndex;
     i++
   ) {
-    if (index === 1) co2EmissionCounts[i] = "0";
-    if (currentValue[i] !== "" || currentValue[i] !== null)
+    if (!(currentValue[i] === "" || currentValue[i] === null))
       co2EmissionCounts[i] = (+co2EmissionCounts[i]! + 1).toString();
   }
   return currentValue;
@@ -114,8 +115,12 @@ fs.createReadStream("data.csv")
       let i = Indexes.minimumYearIndex;
       i <= Indexes.maximumIndicatorIndex;
       i++
-    )
-      co2EmissionAverages.push(+co2EmissionTotals[i]! / +co2EmissionCounts[i]!);
+    ) {
+      if (+co2EmissionTotals[i]! !== 0 && +co2EmissionCounts[i]! !== 0)
+        co2EmissionAverages.push(
+          +co2EmissionTotals[i]! / +co2EmissionCounts[i]!
+        );
+    }
 
     const highestAverageCO2Emision = Math.max(...co2EmissionAverages);
     const highestAverageCO2EmissionYear =
@@ -123,7 +128,6 @@ fs.createReadStream("data.csv")
         co2EmissionAverages.indexOf(highestAverageCO2Emision) +
           Indexes.minimumYearIndex
       ];
-
     console.log(
       `\nYear: ${highestAverageCO2EmissionYear}\nHighest Average CO2 Emission: ${highestAverageCO2Emision.toFixed(
         4
