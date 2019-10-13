@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+      "target": "es2015",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "outDir": "./dist",
+      "declaration": true,
+      "noUnusedLocals": false,
+      "sourceMap": true,
+      "strictNullChecks": true,
+      "resolveJsonModule": true,
+      "noImplicitAny": false,
+      "lib": [
+        "esnext.asynciterable",
+        "es6",
+        "es7",
+        "dom"
+      ],
+      "pretty": true
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+        "dist",
+        "resources"
+      ]
+  }
