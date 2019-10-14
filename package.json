@@ -1,11 +1,19 @@
 {
   "name": "developer-excercise",
   "version": "1.0.0",
-  "description": "eveloper-excercise-prasad.udugama",
-  "main": "src/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        index.ts",
+  "description": "developer-excercise-prasad.udugama",
+  "main": "dist/src/index.js",
   "scripts": {
-    "test": "test",
-    "dev": "yarn ts-node src/index.ts"
+    "build": "rm -rf dist/ && npx tsc",
+    "dev": "yarn ts-node src/index.ts",
+    "start": "node dist/src/index.js",
+    "lint": "tslint 'src/**/*.ts' --project tsconfig.json",
+    "load": "node dist/src/lib/loadData.js",
+    "test:integration": "yarn newman run src/__tests__/integration/test.postman_collection.json",
+    "test:unit": "npx jest",
+    "setup": "npm run build && node dist/src/lib/loadData.js && node dist/src/index.js",
+    "db-up": "docker run -p 27017:27017 --name mongodb -d mongo",
+    "db-down": "docker stop mongodb && docker rm mongodb"
   },
   "repository": {
     "type": "git",
@@ -24,19 +32,23 @@
   "homepage": "https://github.com/udugama/developer-exercise#readme",
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "@types/koa": "^2.0.50",
+    "@types/node": "^12.7.12",
     "jest": "^24.9.0",
+    "newman": "^4.5.5",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "@types/node": "^12.7.12",
+    "bluebird": "^3.7.0",
     "colors": "^1.4.0",
+    "csv-parser": "^2.3.1",
     "csvtojson": "^2.0.10",
     "koa": "^2.10.0",
     "koa-body": "^4.1.1",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.7.4"
+    "mongoose": "^5.7.5"
   }
 }

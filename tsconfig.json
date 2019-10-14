@@ -19,10 +19,11 @@
       "pretty": true
     },
     "include": [
-      "src/**/*.ts"
+      "src/**/*.ts", // "src/__tests__/unit/.test.ts"
     ],
     "exclude": [
-        "dist",
-        "resources"
-      ]
+      "dist",
+      "resources",
+      "node_modules",
+    ]
   }

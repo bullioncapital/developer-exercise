@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "da946673-b9d3-47f5-8c70-39325f1bec42",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getStats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e8fe749-d38a-4e66-a366-fd305d7bc259",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"response to have correct country\", function () {",
+							"    pm.expect(jsonData.country).to.eq(\"Botswana\");",
+							"});",
+							"pm.test(\"response to have correct average\", function () {",
+							"    pm.expect(jsonData.average).to.eq(12.9);",
+							"});" 
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reportid\": 1,\r\n    \"request\": \"getstats\",\r\n    \"category\": {\r\n      \"id\": 11,\r\n      \"name\": \"Urban population growth\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/getStats"
+			},
+			"response": []
+		},
+		{
+			"name": "getStats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e8fe749-d38a-4e66-a366-fd305d7bc259",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"response to have correct country\", function () {",
+							"    pm.expect(jsonData.country).to.eq(\"World\");",
+							"});",
+							"pm.test(\"response to have correct average\", function () {",
+							"    pm.expect(jsonData.average).to.eq(21348295.64);",
+							"});" 
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reportid\": 2,\r\n    \"request\": \"getstats\",\r\n    \"category\": {\r\n      \"id\": 22,\r\n      \"name\": \"CO2 emissions\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/getStats"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,20 @@
+{
+    "defaultSeverity": "error",
+    "extends": [],
+    "jsRules": {},
+    "rules": {
+      "quotemark": [
+        true,
+        "single"
+      ],
+      "completed-docs": [
+        false
+      ],
+      "no-var-requires": false,
+      "object-literal-sort-keys": false,
+      "space-before-function-paren": true,
+      "no-console": false
+    },
+    "rulesDirectory": []
+  }
+  
