@@ -64,7 +64,10 @@ Note: On error deploying docker setup try removing all existing images with same
 * Import following postman file to the postman <resources/postman/test.postman_collection.json>.
 * Endpoint payload body is as follows:
 
-request for report id = 1:
+note : request header suppose to be as follows:
+`Content-Type: application/json`
+
+POST request for report id = 1:
 `{
     "reportid": 1,
     "request": "getstats",
@@ -74,7 +77,7 @@ request for report id = 1:
     }
 }`
 
-request for report id = 2:
+POST request for report id = 2:
 `{
     "reportid": 2,
     "request": "getstats",
@@ -88,10 +91,17 @@ request for report id = 2:
 
 * currently some npm issue starting the server and loading the data to the table.
 * once the mionor issue resolved `docker composer up` command should get it up and running an the api host will be `http://localhost/getstats`.
+* please refer to section `Start server and Loading data into mongodb docker` for testing the service.
 
 ### JSON schema validation
 
 JSON schema validation is implementation for demondstrated on 'src/lib/getStats.ts: 12,13'. JSON schema is `resources/schema/statsRequest.json`. For the validations VLC npm module is used.
+
+### loading CSV data to the mongo docker instance
+
+* Run `yarn db-up` to stand up the mongo server.
+* Run `yarn build` to compile the code.
+* Run `yarn load` to load the csv data to the database.
 
 ### interface
 
