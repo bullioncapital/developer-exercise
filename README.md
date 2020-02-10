@@ -1,16 +1,33 @@
 # ABX Developer Exercise
+This exercise is designed to demonstrate a candidate's abilities across a range of competencies in software development with Typescript. 
 
 ## Instructions
+- Fork the repository
+- Create a basic addition and subtraction calculator which implements the following rules:
+  - On triggering an 'add' action, add 5 to the current total
+  - On triggering a 'subtract' action, subtract 5 from the current total
+  - At any point in time we should be able to see the history of provided additions and subtractions (outputting to the console is fine, but feel free to create a UI implementation)
+  - Implement at least three (3) of the demonstratable concepts listed below
+- Create a pull request with your solution
 
-1. Fork the repository.
-2. Create a script or application that generates outputs to the following from data.csv:
+**NOTE: Only submissions written in Typescript will be accepted.**
 
-	2a. The country with the highest average "Urban population growth (annual %)" between 1980 and 1990. Exclude countries where any data entry for this time range is missing.
+## Grading
+You will be scored on the following:
+- Code cleanliness
+- Code reusability
+- Understandability
+- Documentation
 
-	2b. The year with the highest "CO2 emissions (kt)", averaged across each country for which data is available.
-3. Display the results to the user, however you choose to do so.
-4. Create a pull request with your solution.
-
-Note: There is no right or wrong way to achieve this. Please provide instructions on how to run your solution. Please use Docker where appropriate for access to dependencies (Databases, runtimes etc).
-
-If you'd prefer not have this repo public on your Github, feel free to clone it into a private repo with your provider of choice. Give christopher.dingli@abx.com view permissions when you are complete.
+## Demonstratable concepts
+You are free to make your solution to this exercise as simple or as complicated as you want based off the above criteria. At least three (3) of the below concepts *must* be demonstrated in your implementation, but we recommend implementing as many as possible to adequately demonstrate your abilities.
+- Caching layer
+- Database storage
+- Containerization
+- Unit testing
+- Automated e2e testing
+- Microservice implementation
+- RESTful API
+- User interface
+- Application CLI
+- Blockchain integration (big points for this!)
