@@ -8,7 +8,7 @@ This exercise is designed to demonstrate a candidate's abilities across a range 
   - On triggering a 'subtract' action, subtract 5 from the current total
   - At any point in time we should be able to see the history of provided additions and subtractions (outputting to the console is fine, but feel free to create a UI implementation)
   - Implement at least three (3) of the demonstratable concepts listed below
-- Create a pull request with your solution
+- Create a pull request back to this repository with your solution 
 
 **NOTE: Only submissions written in Typescript will be accepted.**
 
