@@ -9,6 +9,7 @@ This exercise is designed to demonstrate a candidate's abilities across a range 
   - At any point in time we should be able to see the history of provided additions and subtractions (outputting to the console is fine, but feel free to create a UI implementation)
   - Implement at least three (3) of the demonstratable concepts listed below
 - Create a pull request back to this repository with your solution 
+  - If you prefer your submission to be private please zip your project and send it through to your company contact, clearly stating that this is a tech test submission.
 
 **NOTE: Only submissions written in Typescript will be accepted.**
 
@@ -25,6 +26,7 @@ You are free to make your solution to this exercise as simple or as complicated 
 - Database storage
 - Containerization
 - Unit testing
+- An equal knowledge of Functional principles and OOP
 - Automated e2e testing
 - Microservice implementation
 - RESTful API
