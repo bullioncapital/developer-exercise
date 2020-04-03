@@ -33,7 +33,7 @@ npm test
 
 **Web App**: (App **_must_** be running)
 
-Visit: [http://localhost:8080/health](http://localhost:8080/health)
+Visit: [http://localhost:8080](http://localhost:8080)
 
 
 ## Greetings
