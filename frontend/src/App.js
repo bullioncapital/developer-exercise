@@ -10,7 +10,7 @@ class App extends React.Component {
     this.setState(_ => ({
       iterator: valueStateChange
     }));
-    console.log("New total: " + valueStateChange );
+    document.getElementById('list').innerHTML += "<li>New total: " + valueStateChange + "</li>"
   };
 
   render() {
@@ -36,6 +36,8 @@ class App extends React.Component {
           >
             Substract -5
           </button>
+	    <br/><br/>
+	  <ul id="list"></ul>
         </div>
       </div>
     );
