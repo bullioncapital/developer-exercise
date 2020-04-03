@@ -2,24 +2,18 @@
   "name": "developer-exercise",
   "version": "2.0.0",
   "description": "ABX Developer Exercise",
+  "main": "index.js",
   "scripts": {
-    "start": "ts-node ./src/index.ts",
-    "start:dev": "ts-node-dev ./src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx ts-node index.ts",
+    "build": "npx tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bullioncapital/developer-exercise.git"
-  },
-  "author": "",
+  "repository": "git+https://github.com/bullioncapital/developer-exercise.git",
+  "author": "Matías Medrano Gamonal <matiasmedrano94@gmail.com>",
   "license": "ISC",
-  "homepage": "https://github.com/bullioncapital/developer-exercise#readme",
-  "devDependencies": {
-    "ts-node-dev": "^1.0.0-pre.44"
-  },
   "dependencies": {
-    "@types/node": "^13.7.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
-  }
+    "@types/express": "^4.17.4",
+    "express": "^4.17.1",
+    "typescript": "^3.8.3"
+  },
+  "homepage": "https://github.com/bullioncapital/developer-exercise#readme"
 }
