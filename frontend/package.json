@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv ./build/* ../build/frontend",
+    "build": "rm -rf ../build/frontend && mkdir ../build/frontend && react-scripts build && mv ./build/* ../build/frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
