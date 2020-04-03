@@ -6,7 +6,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "lib": ["es6"],
+    "lib": ["es6", "dom", "es2017"],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
   },

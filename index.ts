@@ -6,3 +6,5 @@ const port = 8080;
 
 const server = new Server(app);
 server.start(port);
+
+export default app;

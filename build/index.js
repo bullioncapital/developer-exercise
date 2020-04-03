@@ -9,3 +9,4 @@ const app = express_1.default();
 const port = 8080;
 const server = new Server_1.Server(app);
 server.start(port);
+exports.default = app;
