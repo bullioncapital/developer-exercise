@@ -1,0 +1,14 @@
+version: "3"
+networks:
+  app_default:
+    driver: bridge
+
+services:
+  app:
+    networks:
+      - app_default
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
