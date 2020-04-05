@@ -1,0 +1,23 @@
+.app-Main {
+    text-align: center;
+}
+
+.react-Counter {
+    display: block;
+    padding: 20px;
+}
+
+.react-AddGroup, .react-SubtractGroup {
+    display: inline-block;
+    padding: 20px;
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.react-TransactionHistory {
+    max-height: 400px;
+    overflow-y: scroll;
+}

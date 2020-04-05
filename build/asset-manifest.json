@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/bullioncapital/developer-exercisestatic/css/main.5beb4d21.chunk.css",
+    "main.js": "/bullioncapital/developer-exercisestatic/js/main.bfd49268.chunk.js",
+    "main.js.map": "/bullioncapital/developer-exercisestatic/js/main.bfd49268.chunk.js.map",
+    "runtime-main.js": "/bullioncapital/developer-exercisestatic/js/runtime-main.b8a47947.js",
+    "runtime-main.js.map": "/bullioncapital/developer-exercisestatic/js/runtime-main.b8a47947.js.map",
+    "static/css/2.89f067aa.chunk.css": "/bullioncapital/developer-exercisestatic/css/2.89f067aa.chunk.css",
+    "static/js/2.955e9f14.chunk.js": "/bullioncapital/developer-exercisestatic/js/2.955e9f14.chunk.js",
+    "static/js/2.955e9f14.chunk.js.map": "/bullioncapital/developer-exercisestatic/js/2.955e9f14.chunk.js.map",
+    "index.html": "/bullioncapital/developer-exerciseindex.html",
+    "precache-manifest.0a143bd2360a5aa11603bad96284a43b.js": "/bullioncapital/developer-exerciseprecache-manifest.0a143bd2360a5aa11603bad96284a43b.js",
+    "service-worker.js": "/bullioncapital/developer-exerciseservice-worker.js",
+    "static/css/2.89f067aa.chunk.css.map": "/bullioncapital/developer-exercisestatic/css/2.89f067aa.chunk.css.map",
+    "static/css/main.5beb4d21.chunk.css.map": "/bullioncapital/developer-exercisestatic/css/main.5beb4d21.chunk.css.map",
+    "static/js/2.955e9f14.chunk.js.LICENSE.txt": "/bullioncapital/developer-exercisestatic/js/2.955e9f14.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b8a47947.js",
+    "static/css/2.89f067aa.chunk.css",
+    "static/js/2.955e9f14.chunk.js",
+    "static/css/main.5beb4d21.chunk.css",
+    "static/js/main.bfd49268.chunk.js"
+  ]
+}

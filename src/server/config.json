@@ -1,0 +1,23 @@
+{
+    "restConfig": {
+        "hostName": "localhost",
+        "hostPort": 8176
+    },
+    "webServerConfig": {
+        "hostName": "localhost",
+        "hostPort": 8080
+    },
+    "dbConfig": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "counter",
+        "password": "gdn4",
+        "port": 5432
+    },
+    "restApi": {
+        "paths": {
+            "modifyCount": "modifyCount",
+            "getCount": "getCount"
+        }
+    }
+}

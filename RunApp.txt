@@ -1,0 +1,4 @@
+- To do a fresh build, npm run react-build
+- Postgres is being used of the database of choice, a file for building the database is provided "DB_SCHEMA.pgsql"
+  settings can be updated in src\server\config.json
+- The Web server and Application server are run with the npm start script, the frontend is hosted on localhost:8080
