@@ -1,6 +1,6 @@
 {
   "name": "developer-exercise",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "ABX Developer Exercise",
   "scripts": {
     "start": "ts-node ./src/index.ts",
@@ -15,10 +15,15 @@
   "license": "ISC",
   "homepage": "https://github.com/bullioncapital/developer-exercise#readme",
   "devDependencies": {
+    "@types/node": "^13.13.12",
+    "@types/sqlite3": "^3.1.6",
     "ts-node-dev": "^1.0.0-pre.44"
   },
   "dependencies": {
-    "@types/node": "^13.7.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "sqlite3": "^4.2.0",
+    "superagent": "^5.3.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }
