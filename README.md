@@ -5,7 +5,7 @@ This exercise is designed to demonstrate a candidate's abilities across a range 
 ## Instructions
 
 - Fork the repository
-- The backend currently servers a dataset to the front end
+- The backend currently serves a dataset to the front end
   - The frontend appears to lock up when viewing all that data
   - Implement pagination to reduce load on the browser
   - Implement caching to reduce load on the database
