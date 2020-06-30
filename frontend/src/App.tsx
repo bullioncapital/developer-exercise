@@ -20,7 +20,7 @@ function App() {
 
   const columns = useMemo(() => [
       {
-        Header: 'Data Table',
+        Header: 'Farmers Market Data',
         columns: [
           {
             Header: 'FMID',
@@ -239,7 +239,7 @@ function App() {
             accessor: 'Mushrooms'
           }, 
           {
-            Header:'PetFood',
+            Header:'Pet Food',
             accessor: 'PetFood'
           }, 
           {
@@ -247,11 +247,11 @@ function App() {
             accessor: 'Tofu'
           }, 
           {
-            Header:'WildHarvested',
+            Header:'Wild Harvested',
             accessor: 'WildHarvested'
           }, 
           {
-            Header:'updateTime',
+            Header:'Last Updated',
             accessor: 'updateTime'
           }
         ],
@@ -265,9 +265,9 @@ function App() {
     table = <Table columns={columns} data={data} />
   } else {
     if (error) {
-      table = <div>An Error Has Occured</div>
+      table = <div className="error">An Error Has Occured</div>
     } else {
-      table = <div>Loading...</div>
+      table = <div className="Loading">Loading...</div>
     }
   }
 
