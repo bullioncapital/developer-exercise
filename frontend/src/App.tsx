@@ -273,8 +273,12 @@ function App() {
 
 
   return (
-    <div className="App">
-      {table}
+    <div className="app">
+      <div className="filter"></div>
+
+      <div className="table-container">
+        {table}
+      </div>
     </div>
   );
 }
