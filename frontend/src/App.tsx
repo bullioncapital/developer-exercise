@@ -328,7 +328,7 @@ function App () {
           data-testid='next'
           className='next'
           onClick={() => {
-            if (page !== Math.ceil((data.length - 1) / limit)) {
+            if (page !== Math.ceil(data.length / limit)) {
               setPage(page + 1)
             }
           }}
@@ -339,7 +339,7 @@ function App () {
           data-testid='last'
           className='last'
           onClick={() => {
-            setPage(Math.ceil((data.length - 1) / limit))
+            setPage(Math.ceil(data.length / limit))
           }}
         >{'>>'}
         </button>

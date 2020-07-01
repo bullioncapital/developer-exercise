@@ -30,7 +30,7 @@ function Table({ columns, data, filter, page, limit = 5 }: Props) {
 
   // Filter By Page
   if (page && limit > 0) {
-    const lastPage = Math.ceil((data.length - 1) / limit)
+    const lastPage = Math.ceil(data.length / limit)
     if (page > lastPage) page = lastPage
     if (page < 1) page = 1
 
