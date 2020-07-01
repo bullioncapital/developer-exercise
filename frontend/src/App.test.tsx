@@ -1,7 +1,7 @@
 import React from 'react'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { render, fireEvent, waitFor } from '@testing-library/react'
+import { render, fireEvent, waitForElement } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import App from './App'
 
@@ -96,41 +96,39 @@ describe('Tests App.tsx', () => {
 
   describe('Test Pagination', () => {
     test('Should goto last page', async () => {
-      const { getByTestId, findByText } = render(<App />)
+      const { getByTestId, getByText } = render(<App />)
       const last = getByTestId('last')
+      await waitForElement(() => getByText(/1000001/i))
       fireEvent.click(last)
-      const FMID = await findByText('1000021')
-      expect(FMID).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000021/i))
     })
 
     test('Should goto first page', async () => {
-      const { getByTestId, findByText } = render(<App />)
+      const { getByTestId, getByText } = render(<App />)
+      await waitForElement(() => getByText(/1000001/i))
       fireEvent.click(getByTestId('last'))
-      const FMID1 = await findByText('1000021')
-      expect(FMID1).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000021/i))
       fireEvent.click(getByTestId('first'))
-      const FMID2 = await findByText('1000001')
-      expect(FMID2).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000001/i))
     })
 
     test('Should goto next page', async () => {
-      const { getByTestId, findByText } = render(<App />)
+      const { getByTestId, getByText } = render(<App />)
       const first = getByTestId('next')
+      await waitForElement(() => getByText(/1000001/i))
       fireEvent.click(first)
-      const FMID = await findByText('1000013')
-      expect(FMID).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000013/i))
     })
 
     test('Should goto back page', async () => {
-      const { getByTestId, findByText } = render(<App />)
+      const { getByTestId, getByText } = render(<App />)
+      await waitForElement(() => getByText(/1000001/i))
       const last = getByTestId('last')
       fireEvent.click(last)
-      const FMID1 = await findByText('1000021')
-      expect(FMID1).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000021/i))
       const back = getByTestId('back')
       fireEvent.click(back)
-      const FMID2 = await findByText('1000013')
-      expect(FMID2).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000013/i))
     })
   })
 })
