@@ -273,9 +273,11 @@ function App () {
 
   return (
     <div className='app'>
+      <h3>Page Control</h3>
+
       {/* Filter */}
       <div className='filter'>
-        <h3>Text Filter</h3>
+        <h4>Text Filter</h4>
         <input
           value={filter}
           onChange={e => {
@@ -298,8 +300,7 @@ function App () {
 
       {/* Pagination */}
       <div className='pagination'>
-        <h3>Page Control</h3>
-        <h4>Current Page - {page}</h4>
+        <h4>Current Page: {page}</h4>
         <button onClick={() => {
           setPage(1)
         }}
@@ -329,7 +330,8 @@ function App () {
       </div>
 
       {/* Row Limit */}
-      <div className='rowLength'>
+      <div className='row-length'>
+        <h4>Row Limit</h4>
         <select
           onChange={e => {
             setPage(1)
