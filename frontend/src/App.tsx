@@ -6,7 +6,8 @@ import Table from './Table'
 function App() {
   const [data, updateData] = useState([]);
   const [error, setError] = useState(false)
-  // const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");
+  const [column, setColumn] = useState("")
 
   useEffect(() => {
     superagent.get("http://localhost:3001/FarmersMarket/").end((error, res) => {
@@ -17,8 +18,6 @@ function App() {
       updateData(JSON.parse(res.text));
     });
   }, []);
-
-
 
   const columns = [
     {
@@ -257,7 +256,7 @@ function App() {
 
   let table
   if (data.length) {
-    table = <Table columns={columns} data={data} />
+    table = <Table columns={columns} data={data} page={1} filter={{ text: filter, column }}/>
   } else {
     if (error) {
       table = <div className="error">An Error Has Occured</div>
@@ -271,8 +270,22 @@ function App() {
     <div className="app">
       <div className="filter">
         <input
+          value={filter}
+          onChange={e => {
+            setFilter(e.target.value || '')
+          }}
           placeholder={"Search name"}
         />
+
+        <select
+          onChange={e => {
+            setColumn(e.target.value || '')
+          }}
+        >
+          {[{ title: 'All', key: undefined }, ...columns].map(({title, key}, i) => {
+            return <option key={i} value={key}>{title}</option>
+          })}
+        </select>
       </div>
 
       <div className="table-container">

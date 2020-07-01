@@ -100,7 +100,7 @@ async function getFarmersMarketDataCache(): Promise<FarmersMarketData[]>  {
 }
 
 async function getFarmersMarketData (): Promise<FarmersMarketData[]> {
-  return query('SELECT * FROM farmers_markets_from_usda ORDER BY FMID ASC LIMIT 10')
+  return query('SELECT * FROM farmers_markets_from_usda ORDER BY FMID ASC')
 }
 
 function query (sql: string, params?: Array<any>): Promise<any[]> {
