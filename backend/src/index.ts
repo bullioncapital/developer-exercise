@@ -7,7 +7,7 @@ const db = new sqlite3.Database("db");
 const app = express();
 app.use(cors());
 
-app.get("/FarmersMarket", async function (req, res) {
+app.get("/farmers-market", async function (req, res) {
   try {
     const farmersMarketData = await getFarmersMarketDataCache()
     res.send(farmersMarketData)

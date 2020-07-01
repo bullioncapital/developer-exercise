@@ -9,7 +9,7 @@ describe('App Tests', () => {
       const searchBox = getByTestId('search-box')
       fireEvent.change(searchBox, { target: { value: 13775 } })
       const FMID1 = await findByText('1000249')
-      const FMID2 = await findByText('1000249')
+      const FMID2 = await findByText('1018934')
       expect(FMID1).toBeInTheDocument()
       expect(FMID2).toBeInTheDocument()
     })

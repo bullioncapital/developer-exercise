@@ -14,7 +14,7 @@ function App () {
 
   // AJAX Request
   useEffect(() => {
-    superagent.get('http://localhost:3001/FarmersMarket/').end((error, res) => {
+    superagent.get('http://localhost:3001/farmers-market/').end((error, res) => {
       if (error) {
         setError(true)
         throw error
