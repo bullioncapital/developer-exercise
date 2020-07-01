@@ -315,14 +315,14 @@ function App () {
         </button>
 
         <button onClick={() => {
-          if (page !== Math.floor((data.length - 1) / limit)) {
+          if (page !== Math.ceil((data.length - 1) / limit)) {
             setPage(page + 1)
           }
         }}
         >{'>'}
         </button>
         <button onClick={() => {
-          setPage(Math.floor((data.length - 1) / limit))
+          setPage(Math.ceil((data.length - 1) / limit))
         }}
         >{'>>'}
         </button>
