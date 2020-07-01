@@ -279,6 +279,8 @@ function App () {
       <div className='filter'>
         <h4>Text Filter</h4>
         <input
+          data-testid='search-box'
+          className='search-box'
           value={filter}
           onChange={e => {
             setPage(1)
@@ -288,11 +290,13 @@ function App () {
         />
 
         <select
+          data-testid='column-select'
+          className='column-select'
           onChange={e => {
             setColumn(e.target.value || '')
           }}
         >
-          {[{ title: 'All', key: undefined }, ...columns].map(({ title, key }, i) => {
+          {[{ title: 'All', key: '' }, ...columns].map(({ title, key }, i) => {
             return <option key={i} value={key}>{title}</option>
           })}
         </select>
@@ -301,30 +305,43 @@ function App () {
       {/* Pagination */}
       <div className='pagination'>
         <h4>Current Page: {page}</h4>
-        <button onClick={() => {
-          setPage(1)
-        }}
+        <button
+          data-testid='first'
+          className='first'
+          onClick={() => {
+            setPage(1)
+          }}
         >{'<<'}
         </button>
 
-        <button onClick={() => {
-          if (page !== 1) {
-            setPage(page - 1)
-          }
-        }}
+        <button
+          data-testid='back'
+          className='back'
+          onClick={() => {
+            if (page !== 1) {
+              setPage(page - 1)
+            }
+          }}
         >{'<'}
         </button>
 
-        <button onClick={() => {
-          if (page !== Math.ceil((data.length - 1) / limit)) {
-            setPage(page + 1)
-          }
-        }}
+        <button
+          data-testid='next'
+          className='next'
+          onClick={() => {
+            if (page !== Math.ceil((data.length - 1) / limit)) {
+              setPage(page + 1)
+            }
+          }}
         >{'>'}
         </button>
-        <button onClick={() => {
-          setPage(Math.ceil((data.length - 1) / limit))
-        }}
+
+        <button
+          data-testid='last'
+          className='last'
+          onClick={() => {
+            setPage(Math.ceil((data.length - 1) / limit))
+          }}
         >{'>>'}
         </button>
       </div>
@@ -333,6 +350,7 @@ function App () {
       <div className='row-length'>
         <h4>Row Limit</h4>
         <select
+          data-testid='limit-select'
           onChange={e => {
             setPage(1)
             setLimit(Number(e.target.value) || 5)
