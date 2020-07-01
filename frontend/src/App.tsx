@@ -4,10 +4,13 @@ import * as superagent from 'superagent'
 import Table from './Table'
 
 function App () {
+  // Hooks
   const [data, updateData] = useState([])
   const [error, setError] = useState(false)
   const [filter, setFilter] = useState('')
   const [column, setColumn] = useState('')
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(5)
 
   useEffect(() => {
     superagent.get('http://localhost:3001/FarmersMarket/').end((error, res) => {
@@ -256,7 +259,7 @@ function App () {
 
   let table
   if (data.length) {
-    table = <Table columns={columns} data={data} page={1} filter={{ text: filter, column }} />
+    table = <Table columns={columns} data={data} page={page} filter={{ text: filter, column }} limit={limit} />
   } else {
     if (error) {
       table = <div className='error'>An Error Has Occured</div>
@@ -268,6 +271,7 @@ function App () {
   return (
     <div className='app'>
       <div className='filter'>
+        <h3>Text Filter</h3>
         <input
           value={filter}
           onChange={e => {
@@ -284,6 +288,46 @@ function App () {
           {[{ title: 'All', key: undefined }, ...columns].map(({ title, key }, i) => {
             return <option key={i} value={key}>{title}</option>
           })}
+        </select>
+      </div>
+
+      <div className='pagination'>
+        <h3>Page Control</h3>
+
+        <button onClick={() => {
+          setPage(1)
+        }}
+        >start
+        </button>
+
+        <button onClick={() => {
+          setPage(page - 1)
+        }}
+        >back
+        </button>
+
+        <button onClick={() => {
+          setPage(page + 1)
+        }}
+        >next
+        </button>
+        <button onClick={() => {
+          setPage(Math.floor(data.length / limit))
+        }}
+        >end
+        </button>
+      </div>
+
+      <div className='rowLength'>
+        <select
+          onChange={e => {
+            setLimit(Number(e.target.value) || 5)
+          }}
+        >
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={0}>All</option>
         </select>
       </div>
 
