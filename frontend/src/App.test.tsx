@@ -76,21 +76,19 @@ afterAll(() => server.close())
 describe('Tests App.tsx', () => {
   describe('Test Filtering', () => {
     test('Should filter by All value of Shelby Food and Craft Market', async () => {
-      const { findByText, getByTestId } = render(<App />)
+      const { getByText, getByTestId } = render(<App />)
       const searchBox = getByTestId('search-box')
       fireEvent.change(searchBox, { target: { value: 'Shelby Food and Craft Market' } })
-      const FMID = await findByText('1000001')
-      expect(FMID).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000001/i))
     })
 
     test('Should filter by MarketName value of Edmore Farmers Market', async () => {
-      const { findByText, getByTestId } = render(<App />)
+      const { getByText, getByTestId } = render(<App />)
       const searchBox = getByTestId('search-box')
       const columnSelect = getByTestId('column-select')
       fireEvent.change(columnSelect, { target: { value: 'MarketName' } })
       fireEvent.change(searchBox, { target: { value: 'Edmore Farmers Market' } })
-      const FMID = await findByText('1000003')
-      expect(FMID).toBeInTheDocument()
+      await waitForElement(() => getByText(/1000003/i))
     })
   })
 
