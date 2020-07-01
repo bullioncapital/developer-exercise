@@ -279,9 +279,10 @@ function App () {
         <input
           value={filter}
           onChange={e => {
+            setPage(1)
             setFilter(e.target.value || '')
           }}
-          placeholder='Search name'
+          placeholder='Search Data'
         />
 
         <select
@@ -298,28 +299,32 @@ function App () {
       {/* Pagination */}
       <div className='pagination'>
         <h3>Page Control</h3>
-
+        <h4>Current Page - {page}</h4>
         <button onClick={() => {
           setPage(1)
         }}
-        >start
+        >{'<<'}
         </button>
 
         <button onClick={() => {
-          setPage(page - 1)
+          if (page !== 1) {
+            setPage(page - 1)
+          }
         }}
-        >back
+        >{'<'}
         </button>
 
         <button onClick={() => {
-          setPage(page + 1)
+          if (page !== Math.floor((data.length - 1) / limit)) {
+            setPage(page + 1)
+          }
         }}
-        >next
+        >{'>'}
         </button>
         <button onClick={() => {
-          setPage(Math.floor(data.length / limit))
+          setPage(Math.floor((data.length - 1) / limit))
         }}
-        >end
+        >{'>>'}
         </button>
       </div>
 
@@ -327,13 +332,14 @@ function App () {
       <div className='rowLength'>
         <select
           onChange={e => {
+            setPage(1)
             setLimit(Number(e.target.value) || 5)
           }}
         >
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={20}>20</option>
-          <option value={0}>All</option>
+          {/* <option value={0}>All</option> */}
         </select>
       </div>
 

@@ -30,6 +30,10 @@ function Table({ columns, data, filter, page, limit = 5 }: Props) {
 
   // Filter By Page
   if (page && limit > 0) {
+    const lastPage = Math.floor((data.length - 1) / limit)
+    if (page > lastPage) page = lastPage
+    if (page < 1) page = 1
+
     data = data.slice((page - 1) * limit, page * limit)
   }
 
