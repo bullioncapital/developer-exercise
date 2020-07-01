@@ -12,6 +12,7 @@ function App () {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(5)
 
+  // AJAX Request
   useEffect(() => {
     superagent.get('http://localhost:3001/FarmersMarket/').end((error, res) => {
       if (error) {
@@ -22,6 +23,7 @@ function App () {
     })
   }, [])
 
+  // Column Title and Keys
   const columns = [
     {
       title: 'FMID',
@@ -257,6 +259,7 @@ function App () {
     }
   ]
 
+  // Check Table Exists
   let table
   if (data.length) {
     table = <Table columns={columns} data={data} page={page} filter={{ text: filter, column }} limit={limit} />
@@ -270,6 +273,7 @@ function App () {
 
   return (
     <div className='app'>
+      {/* Filter */}
       <div className='filter'>
         <h3>Text Filter</h3>
         <input
@@ -291,6 +295,7 @@ function App () {
         </select>
       </div>
 
+      {/* Pagination */}
       <div className='pagination'>
         <h3>Page Control</h3>
 
@@ -318,6 +323,7 @@ function App () {
         </button>
       </div>
 
+      {/* Row Limit */}
       <div className='rowLength'>
         <select
           onChange={e => {
@@ -331,6 +337,7 @@ function App () {
         </select>
       </div>
 
+      {/* Table */}
       <div className='table-container'>
         {table}
       </div>

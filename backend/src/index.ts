@@ -86,6 +86,7 @@ interface Cache<T> {
 const EXPIRY = 1000 * 60 * 60 // Hour Cache
 let farmersMarketCache: Cache<FarmersMarketData>
 
+// Would ideally be in a cache package
 async function getFarmersMarketDataCache(): Promise<FarmersMarketData[]>  {
   if (farmersMarketCache && farmersMarketCache.expirey > Date.now()) {
     return farmersMarketCache.data
@@ -99,10 +100,12 @@ async function getFarmersMarketDataCache(): Promise<FarmersMarketData[]>  {
   }
 }
 
+// Would ideally be in a sub folder inside sql package
 async function getFarmersMarketData (): Promise<FarmersMarketData[]> {
   return query('SELECT * FROM farmers_markets_from_usda ORDER BY FMID ASC')
 }
 
+// Would ideally be in a sql package
 function query (sql: string, params?: Array<any>): Promise<any[]> {
   return new Promise((resolve, reject) => {
     db.all(sql, params, (error, row) => {
