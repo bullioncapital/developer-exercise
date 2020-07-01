@@ -13,10 +13,8 @@ code {
 .app {
   padding: 10px;
 
-  .filter {
-    input {
-      margin-right: 10px;
-    }
+  .filter > input {
+    margin-right: 10px;
   }
 
   .table-container {
