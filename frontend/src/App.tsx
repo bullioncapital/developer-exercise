@@ -17,7 +17,6 @@ function App () {
     superagent.get('http://localhost:3001/farmers-market/').end((error, res) => {
       if (error) {
         setError(true)
-        throw error
       }
       updateData(JSON.parse(res.text))
     })
