@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import * as superagent from "superagent";
 import Table from './Table'
@@ -6,259 +6,254 @@ import Table from './Table'
 function App() {
   const [data, updateData] = useState([]);
   const [error, setError] = useState(false)
+  // const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    superagent.get("http://localhost:3001/FarmersMarket?pagination=1").end((error, res) => {
+    superagent.get("http://localhost:3001/FarmersMarket/").end((error, res) => {
       if (error) {
         setError(true)
+        throw error
       }
       updateData(JSON.parse(res.text));
     });
   }, []);
 
-  
 
-  const columns = useMemo(() => [
-      {
-        Header: 'Farmers Market Data',
-        columns: [
-          {
-            Header: 'FMID',
-            accessor: 'FMID',
-          },
-          {
-            Header: 'Market Name',
-            accessor: 'MarketName',
-          },
-          {
-            Header: 'Website',
-            accessor: 'Website',
-          },
-          {
-            Header: 'Facebook',
-            accessor: 'Facebook',
-          },
-          {
-            Header: 'Twitter',
-            accessor: 'Twitter',
-          },
-          {
-            Header: 'Youtube',
-            accessor: 'Youtube',
-          },
-          {
-            Header: 'Other Media',
-            accessor: 'OtherMedia',
-          },
-          {
-            Header: 'Street',
-            accessor: 'street',
-          },
-          {
-            Header: 'County',
-            accessor: 'County',
-          },
-          {
-            Header: 'State',
-            accessor: 'State',
-          },
-          {
-            Header: 'ZIP Code',
-            accessor: 'zip'
-          },
-          {
-            Header: 'Season 1 Date',
-            accessor: 'Season1Date'
-          },
-          {
-            Header: 'Season 1 Time',
-            accessor: 'Season1Time'
-          },
-          {
-            Header: 'Season 2 Date',
-            accessor: 'Season2Date'
-          },
-          {
-            Header: 'Season 2 Time',
-            accessor: 'Season2Time'
-          },
-          {
-            Header: 'Season 3 Date',
-            accessor: 'Season3Date'
-          },
-          {
-            Header: 'Season 3 Time',
-            accessor: 'Season3Time'
-          },
-          {
-            Header: 'Season 4 Date',
-            accessor: 'Season4Date'
-          },
-          {
-            Header: 'Season 4 Time',
-            accessor: 'Season4Time'
-          },
-          {
-            Header: 'X',
-            accessor: 'x'
-          },
-          {
-            Header: 'Y',
-            accessor: 'y'
-          },
-          {
-            Header: 'Location',
-            accessor: 'Location'
-          },
-          {
-            Header: 'Credit',
-            accessor: 'Credit'
-          },
-          {
-            Header: 'WIC',
-            accessor: 'WIC'
-          },
-          {
-            Header: 'WIC Cash',
-            accessor: 'WICcash'
-          },
-          {
-            Header: 'SFMNP',
-            accessor: 'SFMNP'
-          }, 
-          {
-            Header: 'SNAP',
-            accessor: 'SNAP'
-          }, 
-          {
-            Header:'Organic',
-            accessor: 'Organic'
-          }, 
-          {
-            Header:'Baked Goods',
-            accessor: 'Bakedgoods'
-          }, 
-          {
-            Header:'Cheese',
-            accessor: 'Cheese'
-          }, 
-          {
-            Header:'Crafts',
-            accessor: 'Crafts'
-          }, 
-          {
-            Header:'Flowers',
-            accessor: 'Flowers'
-          }, 
-          {
-            Header:'Eggs',
-            accessor: 'Eggs'
-          }, 
-          {
-            Header:'Seafood',
-            accessor: 'Seafood'
-          }, 
-          {
-            Header:'Herbs',
-            accessor: 'Herbs'
-          }, 
-          {
-            Header:'Vegetables',
-            accessor: 'Vegetables'
-          }, 
-          {
-            Header:'Honey',
-            accessor: 'Honey'
-          }, 
-          {
-            Header:'Jams',
-            accessor: 'Jams'
-          }, 
-          {
-            Header:'Maple',
-            accessor: 'Maple'
-          }, 
-          {
-            Header:'Meat',
-            accessor: 'Meat'
-          }, 
-          {
-            Header:'Nursery',
-            accessor: 'Nursery'
-          }, 
-          {
-            Header:'Nuts',
-            accessor: 'Nuts'
-          }, 
-          {
-            Header:'Plants',
-            accessor: 'Plants'
-          }, 
-          {
-            Header:'Poultry',
-            accessor: 'Poultry'
-          }, 
-          {
-            Header:'Prepared',
-            accessor: 'Prepared'
-          }, 
-          {
-            Header:'Soap',
-            accessor: 'Soap'
-          }, 
-          {
-            Header:'Trees',
-            accessor: 'Trees'
-          }, 
-          {
-            Header:'Wine',
-            accessor: 'Wine'
-          }, 
-          {
-            Header:'Coffee',
-            accessor: 'Coffee'
-          }, 
-          {
-            Header:'Beans',
-            accessor: 'Beans'
-          }, 
-          {
-            Header:'Fruits',
-            accessor: 'Fruits'
-          }, 
-          {
-            Header:'Grains',
-            accessor: 'Grains'
-          }, 
-          {
-            Header:'Juices',
-            accessor: 'Juices'
-          }, 
-          {
-            Header:'Mushrooms',
-            accessor: 'Mushrooms'
-          }, 
-          {
-            Header:'Pet Food',
-            accessor: 'PetFood'
-          }, 
-          {
-            Header:'Tofu',
-            accessor: 'Tofu'
-          }, 
-          {
-            Header:'Wild Harvested',
-            accessor: 'WildHarvested'
-          }, 
-          {
-            Header:'Last Updated',
-            accessor: 'updateTime'
-          }
-        ],
-      },
-    ],
-    []
-  )
+
+  const columns = [
+    {
+      title: 'FMID',
+      key: 'FMID',
+    },
+    {
+      title: 'Market Name',
+      key: 'MarketName',
+    },
+    {
+      title: 'Website',
+      key: 'Website',
+    },
+    {
+      title: 'Facebook',
+      key: 'Facebook',
+    },
+    {
+      title: 'Twitter',
+      key: 'Twitter',
+    },
+    {
+      title: 'Youtube',
+      key: 'Youtube',
+    },
+    {
+      title: 'Other Media',
+      key: 'OtherMedia',
+    },
+    {
+      title: 'Street',
+      key: 'street',
+    },
+    {
+      title: 'County',
+      key: 'County',
+    },
+    {
+      title: 'State',
+      key: 'State',
+    },
+    {
+      title: 'ZIP Code',
+      key: 'zip'
+    },
+    {
+      title: 'Season 1 Date',
+      key: 'Season1Date'
+    },
+    {
+      title: 'Season 1 Time',
+      key: 'Season1Time'
+    },
+    {
+      title: 'Season 2 Date',
+      key: 'Season2Date'
+    },
+    {
+      title: 'Season 2 Time',
+      key: 'Season2Time'
+    },
+    {
+      title: 'Season 3 Date',
+      key: 'Season3Date'
+    },
+    {
+      title: 'Season 3 Time',
+      key: 'Season3Time'
+    },
+    {
+      title: 'Season 4 Date',
+      key: 'Season4Date'
+    },
+    {
+      title: 'Season 4 Time',
+      key: 'Season4Time'
+    },
+    {
+      title: 'X',
+      key: 'x'
+    },
+    {
+      title: 'Y',
+      key: 'y'
+    },
+    {
+      title: 'Location',
+      key: 'Location'
+    },
+    {
+      title: 'Credit',
+      key: 'Credit'
+    },
+    {
+      title: 'WIC',
+      key: 'WIC'
+    },
+    {
+      title: 'WIC Cash',
+      key: 'WICcash'
+    },
+    {
+      title: 'SFMNP',
+      key: 'SFMNP'
+    },
+    {
+      title: 'SNAP',
+      key: 'SNAP'
+    },
+    {
+      title: 'Organic',
+      key: 'Organic'
+    },
+    {
+      title: 'Baked Goods',
+      key: 'Bakedgoods'
+    },
+    {
+      title: 'Cheese',
+      key: 'Cheese'
+    },
+    {
+      title: 'Crafts',
+      key: 'Crafts'
+    },
+    {
+      title: 'Flowers',
+      key: 'Flowers'
+    },
+    {
+      title: 'Eggs',
+      key: 'Eggs'
+    },
+    {
+      title: 'Seafood',
+      key: 'Seafood'
+    },
+    {
+      title: 'Herbs',
+      key: 'Herbs'
+    },
+    {
+      title: 'Vegetables',
+      key: 'Vegetables'
+    },
+    {
+      title: 'Honey',
+      key: 'Honey'
+    },
+    {
+      title: 'Jams',
+      key: 'Jams'
+    },
+    {
+      title: 'Maple',
+      key: 'Maple'
+    },
+    {
+      title: 'Meat',
+      key: 'Meat'
+    },
+    {
+      title: 'Nursery',
+      key: 'Nursery'
+    },
+    {
+      title: 'Nuts',
+      key: 'Nuts'
+    },
+    {
+      title: 'Plants',
+      key: 'Plants'
+    },
+    {
+      title: 'Poultry',
+      key: 'Poultry'
+    },
+    {
+      title: 'Prepared',
+      key: 'Prepared'
+    },
+    {
+      title: 'Soap',
+      key: 'Soap'
+    },
+    {
+      title: 'Trees',
+      key: 'Trees'
+    },
+    {
+      title: 'Wine',
+      key: 'Wine'
+    },
+    {
+      title: 'Coffee',
+      key: 'Coffee'
+    },
+    {
+      title: 'Beans',
+      key: 'Beans'
+    },
+    {
+      title: 'Fruits',
+      key: 'Fruits'
+    },
+    {
+      title: 'Grains',
+      key: 'Grains'
+    },
+    {
+      title: 'Juices',
+      key: 'Juices'
+    },
+    {
+      title: 'Mushrooms',
+      key: 'Mushrooms'
+    },
+    {
+      title: 'Pet Food',
+      key: 'PetFood'
+    },
+    {
+      title: 'Tofu',
+      key: 'Tofu'
+    },
+    {
+      title: 'Wild Harvested',
+      key: 'WildHarvested'
+    },
+    {
+      title: 'Last Updated',
+      key: 'updateTime'
+    }
+  ]
 
   let table
   if (data.length) {
@@ -274,7 +269,11 @@ function App() {
 
   return (
     <div className="app">
-      <div className="filter"></div>
+      <div className="filter">
+        <input
+          placeholder={"Search name"}
+        />
+      </div>
 
       <div className="table-container">
         {table}

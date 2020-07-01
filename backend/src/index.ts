@@ -9,9 +9,7 @@ app.use(cors());
 
 app.get("/FarmersMarket", async function (req, res) {
   try {
-    const pagination: number = Math.round((req?.query?.pagination || 0) as number)
-    const limit: number = (req?.query?.limit || 20) as number
-    const farmersMarketData = await getFarmersMarketDataCache(pagination, limit)
+    const farmersMarketData = await getFarmersMarketDataCache()
     res.send(farmersMarketData)
   } catch (error) {
     console.log(error)
@@ -82,32 +80,27 @@ interface FarmersMarketData {
 }
 
 interface Cache<T> {
-  [key: number]: Array<T> 
+  expirey: number
+  data: Array<T> 
 }
+const EXPIRY = 1000 * 60 * 60 // Hour Cache
+let farmersMarketCache: Cache<FarmersMarketData>
 
-const farmersMarketCache: Cache<FarmersMarketData> = {}
-async function getFarmersMarketDataCache(pagination: number, limit: number): Promise<FarmersMarketData[]>  {
-  if (farmersMarketCache[pagination]) {
-    return farmersMarketCache[pagination]
+async function getFarmersMarketDataCache(): Promise<FarmersMarketData[]>  {
+  if (farmersMarketCache && farmersMarketCache.expirey > Date.now()) {
+    return farmersMarketCache.data
   } else {
-    return await getFarmersMarketData(pagination, limit)
+    const farmersMarketData = await getFarmersMarketData()
+    farmersMarketCache = {
+      expirey: Date.now() + EXPIRY,
+      data: farmersMarketData
+    }
+    return farmersMarketData
   }
 }
 
-async function getFarmersMarketData (pagination: number, limit: number): Promise<FarmersMarketData[]> {
-  let base = 'SELECT * FROM farmers_markets_from_usda'
-  let limitQuery = ''
-  const data = []
-
-  if (pagination) {
-    const start = (pagination - 1) * limit
-    const end = pagination * limit
-    limitQuery = 'LIMIT ?, ?'
-    data.push(start, end)
-  }
-
-  const stmt = `${base} ORDER BY FMID ASC ${limitQuery}`
-  return await query(stmt, data)
+async function getFarmersMarketData (): Promise<FarmersMarketData[]> {
+  return query('SELECT * FROM farmers_markets_from_usda ORDER BY FMID ASC LIMIT 10')
 }
 
 function query (sql: string, params?: Array<any>): Promise<any[]> {

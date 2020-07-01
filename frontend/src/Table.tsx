@@ -1,41 +1,24 @@
 import React from "react";
-import { useTable } from 'react-table'
 
 export interface Props {
-  columns: any,
-  data: any
+  columns: Array<{title: string, key: string}>,
+  data: any[]
 }
 
 function Table({ columns, data }: Props) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
-  })
-
   return (
-    <table {...getTableProps()}>
+    <table>
       <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
+        {columns.map(({title}) => (
+          <th>{title}</th>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row)
+      <tbody>
+        {data.map((row) => {
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+            <tr>
+              {columns.map(({key}) => {
+                return <td>{row[key]}</td>
               })}
             </tr>
           )
