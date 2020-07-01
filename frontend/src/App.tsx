@@ -1,64 +1,64 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import * as superagent from "superagent";
+import React, { useState, useEffect } from 'react'
+import './App.css'
+import * as superagent from 'superagent'
 import Table from './Table'
 
-function App() {
-  const [data, updateData] = useState([]);
+function App () {
+  const [data, updateData] = useState([])
   const [error, setError] = useState(false)
-  const [filter, setFilter] = useState("");
-  const [column, setColumn] = useState("")
+  const [filter, setFilter] = useState('')
+  const [column, setColumn] = useState('')
 
   useEffect(() => {
-    superagent.get("http://localhost:3001/FarmersMarket/").end((error, res) => {
+    superagent.get('http://localhost:3001/FarmersMarket/').end((error, res) => {
       if (error) {
         setError(true)
         throw error
       }
-      updateData(JSON.parse(res.text));
-    });
-  }, []);
+      updateData(JSON.parse(res.text))
+    })
+  }, [])
 
   const columns = [
     {
       title: 'FMID',
-      key: 'FMID',
+      key: 'FMID'
     },
     {
       title: 'Market Name',
-      key: 'MarketName',
+      key: 'MarketName'
     },
     {
       title: 'Website',
-      key: 'Website',
+      key: 'Website'
     },
     {
       title: 'Facebook',
-      key: 'Facebook',
+      key: 'Facebook'
     },
     {
       title: 'Twitter',
-      key: 'Twitter',
+      key: 'Twitter'
     },
     {
       title: 'Youtube',
-      key: 'Youtube',
+      key: 'Youtube'
     },
     {
       title: 'Other Media',
-      key: 'OtherMedia',
+      key: 'OtherMedia'
     },
     {
       title: 'Street',
-      key: 'street',
+      key: 'street'
     },
     {
       title: 'County',
-      key: 'County',
+      key: 'County'
     },
     {
       title: 'State',
-      key: 'State',
+      key: 'State'
     },
     {
       title: 'ZIP Code',
@@ -256,25 +256,24 @@ function App() {
 
   let table
   if (data.length) {
-    table = <Table columns={columns} data={data} page={1} filter={{ text: filter, column }}/>
+    table = <Table columns={columns} data={data} page={1} filter={{ text: filter, column }} />
   } else {
     if (error) {
-      table = <div className="error">An Error Has Occured</div>
+      table = <div className='error'>An Error Has Occured</div>
     } else {
-      table = <div className="Loading">Loading...</div>
+      table = <div className='Loading'>Loading...</div>
     }
   }
 
-
   return (
-    <div className="app">
-      <div className="filter">
+    <div className='app'>
+      <div className='filter'>
         <input
           value={filter}
           onChange={e => {
             setFilter(e.target.value || '')
           }}
-          placeholder={"Search name"}
+          placeholder='Search name'
         />
 
         <select
@@ -282,17 +281,17 @@ function App() {
             setColumn(e.target.value || '')
           }}
         >
-          {[{ title: 'All', key: undefined }, ...columns].map(({title, key}, i) => {
+          {[{ title: 'All', key: undefined }, ...columns].map(({ title, key }, i) => {
             return <option key={i} value={key}>{title}</option>
           })}
         </select>
       </div>
 
-      <div className="table-container">
+      <div className='table-container'>
         {table}
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
