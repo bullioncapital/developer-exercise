@@ -1,13 +1,25 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import "./App.css";
-import * as superagent from "superagent";
+import Row from "./types/RowType";
+import Filter from "./types/FilterType";
+import ColumnFilter from "./components/ColumnFilter";
 
 const URL = 'http://localhost:3000/data';
 
 function App() {
-    const [data, updateData] = useState([]);
+    const [data, updateData] = useState<Row[]>([]);
+    const [errMsg, setErrMsg] = useState();
+    const columns = useRef<string[]>([]);
+    const oriData = useRef<Row[]>([]);
 
-    function getPage(start, size) {
+    useEffect(() => {
+        async function f() {
+            await getPage(1, 20);
+        }
+        f();
+    }, []);
+
+    async function getPage(start: number, size: number) {
         let params = [];
         if (start) {
             params.push('fmid=' + start);
@@ -19,42 +31,66 @@ function App() {
         if (params.length > 0)
             url += '?' + params.join('&');
 
-        superagent.get(url).end((err, res) => {
-            updateData(JSON.parse(res.text));
-        })
-    }
-
-    function prev() {
-        if (data.length > 0) {
-            const end = data[0].FMID;
-            getPage(end, -20);
-        }
-    }
-    function next() {
-        if (data.length > 0) {
-            const start = data[data.length - 1].FMID;
-            getPage(start, 20);
+        try {
+            const data = await fetch(url).then(res => res.json());
+            if (data && data.length > 0) {
+                oriData.current = data;
+                columns.current = Object.keys(data[0]);
+            }
+            updateData(data);
+        } catch (err) {
+            setErrMsg('Oops something wrong..');
         }
     }
 
-    useEffect(() => {
-        getPage(1, 20);
-    }, []);
+    async function prev() {
+        if (oriData.current.length > 0) {
+            const end = oriData.current[0].FMID;
+            await getPage(end, -20);
+        }
+    }
+    async function next() {
+        if (oriData.current.length > 0) {
+            const start = oriData.current[oriData.current.length - 1].FMID;
+            await getPage(start, 20);
+        }
+    }
+    function applyFilter(filter: Filter) {
+        let res = oriData.current;
+        if (filter && filter.column && filter.val) {
+            res = res.filter((row: any) =>
+                row[filter.column] == filter.val);
+        }
+        updateData(res);
+    }
 
+    if (errMsg) {
+        return (
+            <div className="App">
+                <p>{errMsg}</p>
+            </div>
+        )
+    }
     return (
         <div className="App">
+            <ColumnFilter columns={columns.current}
+                          apply={applyFilter}/>
             <table>
-                <tr>
-                    {data.length > 0 && Object.keys(data[0]).map(header =>
-                        <th>{header}</th>
-                    )}
-                </tr>
-                {data.map((row) => (
+                <thead>
                     <tr>
-                        {Object.values(row).map(val =>
-                            <td>{val}</td>)}
+                        {columns.current.map(column =>
+                            <th>{column}</th>
+                        )}
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {data.map((row) => (
+                        <tr>
+                            {Object.values(row).map(val =>
+                                <td>{val}</td>)}
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <button onClick={prev}>prev</button>
             <button onClick={next}>next</button>
